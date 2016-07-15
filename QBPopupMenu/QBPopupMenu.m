@@ -310,7 +310,10 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
         
         CGSize itemViewSize = [itemView sizeThatFits:CGSizeZero];
         
-        if (itemViews.count > 0 && width + itemViewSize.width + pagenatorWidth > maximumWidth) {
+        BOOL isLastItem = (itemView == self.itemViews.lastObject);
+        CGFloat sizeToAdd = isLastItem ? itemViewSize.width : (itemViewSize.width + pagenatorWidth);
+        
+        if (itemViews.count > 0 && width + sizeToAdd > maximumWidth) {
             [groupedItemViews addObject:[itemViews copy]];
             
             // Create new array
