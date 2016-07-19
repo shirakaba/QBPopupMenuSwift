@@ -173,6 +173,10 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     // Show
     [view addSubview:self.overlayView];
     
+    //Must set this immediately. otherwise, a client can call dismiss while this is animating in
+    //and it will be a no-op and the popup will still be visible
+    self.visible = YES;
+    
     if (animated) {
         self.alpha = 0;
         [self.overlayView addSubview:self];
@@ -180,7 +184,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
         [UIView animateWithDuration:kQBPopupMenuAnimationDuration animations:^(void) {
             self.alpha = 1.0;
         } completion:^(BOOL finished) {
-            self.visible = YES;
+            
             
             // Delegate
             if (self.delegate && [self.delegate respondsToSelector:@selector(popupMenuDidAppear:)]) {
@@ -189,8 +193,6 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
         }];
     } else {
         [self.overlayView addSubview:self];
-        
-        self.visible = YES;
         
         // Delegate
         if (self.delegate && [self.delegate respondsToSelector:@selector(popupMenuDidAppear:)]) {
