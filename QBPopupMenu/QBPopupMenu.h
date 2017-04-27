@@ -39,6 +39,9 @@ typedef NS_ENUM(NSInteger, QBPopupMenuArrowDirection);
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) UIColor *highlightedColor;
 
+@property (nonatomic, weak) UIView *view;
+@property (nonatomic, assign) CGRect targetRect;
+
 + (instancetype)popupMenuWithItems:(NSArray *)items;
 - (instancetype)initWithItems:(NSArray *)items;
 
