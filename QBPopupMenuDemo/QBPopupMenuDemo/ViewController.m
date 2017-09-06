@@ -10,6 +10,7 @@
 
 #import "QBPopupMenu.h"
 #import "QBPlasticPopupMenu.h"
+#import "QBPopupMenuDemo-Swift.h"
 
 @interface ViewController ()
 

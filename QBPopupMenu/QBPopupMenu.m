@@ -8,9 +8,10 @@
 
 #import "QBPopupMenu.h"
 
-#import "QBPopupMenuOverlayView.h"
 #import "QBPopupMenuItemView.h"
 #import "QBPopupMenuPagenatorView.h"
+
+#import "QBPopupMenuDemo-Swift.h"
 
 static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
 
@@ -158,12 +159,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     [self showPage:0];
     
     // Create overlay view
-    self.overlayView = ({
-        QBPopupMenuOverlayView *overlayView = [[QBPopupMenuOverlayView alloc] initWithFrame:view.bounds];
-        overlayView.popupMenu = self;
-        
-        overlayView;
-    });
+    self.overlayView = [[QBPopupMenuOverlayView alloc] initWithFrame:view.bounds popupMenu:self];
     
     // Delegate
     if (self.delegate && [self.delegate respondsToSelector:@selector(popupMenuWillAppear:)]) {

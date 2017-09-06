@@ -7,8 +7,8 @@
 //
 
 #import "QBPopupMenuItemView.h"
-
 #import "QBPopupMenu.h"
+#import "QBPopupMenuDemo-Swift.h"
 
 @interface QBPopupMenuItemView ()
 

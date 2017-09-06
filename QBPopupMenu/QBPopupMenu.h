@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "QBPopupMenuDemo-Swift.h"
-
 @class QBPopupMenu;
 @class QBPopupMenuItemView;
 @class QBPopupMenuPagenatorView;
