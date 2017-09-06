@@ -7,6 +7,7 @@
 //
 
 #import "QBPlasticPopupMenu.h"
+#import "QBPopupMenuDemo-Swift.h"
 
 @implementation QBPlasticPopupMenu
 

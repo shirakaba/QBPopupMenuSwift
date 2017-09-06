@@ -3,3 +3,4 @@ Rewrite all to swift, including main
 Remove occurences of NSObject
 Use structures and Swift syntax, default parameters, varargs, enums
 Remove bridging header
+check memory leaks

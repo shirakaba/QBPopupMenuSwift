@@ -10,7 +10,6 @@
 		AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */; };
 		AA7C7DAF184C791F00CF859B /* QBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA5184C791F00CF859B /* QBPopupMenu.m */; };
 		AA7C7DB1184C791F00CF859B /* QBPopupMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA9184C791F00CF859B /* QBPopupMenuItemView.m */; };
-		AA7C7DB3184C791F00CF859B /* QBPopupMenuPagenatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DAD184C791F00CF859B /* QBPopupMenuPagenatorView.m */; };
 		AA7FA185184321600044F5D7 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA7FA183184321600044F5D7 /* background.jpg */; };
 		AAD226E5183F91C300C27616 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E4183F91C300C27616 /* Foundation.framework */; };
 		AAD226E7183F91C300C27616 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E6183F91C300C27616 /* CoreGraphics.framework */; };
@@ -21,6 +20,7 @@
 		AAD226F8183F91C300C27616 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD226F6183F91C300C27616 /* Main.storyboard */; };
 		AAD226FB183F91C300C27616 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD226FA183F91C300C27616 /* ViewController.m */; };
 		AAD226FD183F91C300C27616 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD226FC183F91C300C27616 /* Images.xcassets */; };
+		F942F12A1F60846F0042EE24 /* QBPopupMenuPagenatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */; };
 		F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */; };
 		F9AAE9341F5F3D0F006ED678 /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9AAE9331F5F3D0F006ED678 /* TODO.txt */; };
 		F9AAE9371F5F3D9F006ED678 /* QBPopupMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */; };
@@ -33,8 +33,6 @@
 		AA7C7DA5184C791F00CF859B /* QBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenu.m; sourceTree = "<group>"; };
 		AA7C7DA8184C791F00CF859B /* QBPopupMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuItemView.h; sourceTree = "<group>"; };
 		AA7C7DA9184C791F00CF859B /* QBPopupMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuItemView.m; sourceTree = "<group>"; };
-		AA7C7DAC184C791F00CF859B /* QBPopupMenuPagenatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuPagenatorView.h; sourceTree = "<group>"; };
-		AA7C7DAD184C791F00CF859B /* QBPopupMenuPagenatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuPagenatorView.m; sourceTree = "<group>"; };
 		AA7FA183184321600044F5D7 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		AAD226E1183F91C300C27616 /* QBPopupMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QBPopupMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD226E4183F91C300C27616 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,6 +48,7 @@
 		AAD226F9183F91C300C27616 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		AAD226FA183F91C300C27616 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AAD226FC183F91C300C27616 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuPagenatorView.swift; sourceTree = "<group>"; };
 		F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuOverlayView.swift; sourceTree = "<group>"; };
 		F9AAE9331F5F3D0F006ED678 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		F9AAE9351F5F3D9F006ED678 /* QBPopupMenuDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QBPopupMenuDemo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -78,12 +77,11 @@
 				AA7C7DA5184C791F00CF859B /* QBPopupMenu.m */,
 				AA7C7DA8184C791F00CF859B /* QBPopupMenuItemView.h */,
 				AA7C7DA9184C791F00CF859B /* QBPopupMenuItemView.m */,
-				AA7C7DAC184C791F00CF859B /* QBPopupMenuPagenatorView.h */,
-				AA7C7DAD184C791F00CF859B /* QBPopupMenuPagenatorView.m */,
 				AA7C7DA2184C791F00CF859B /* QBPlasticPopupMenu.h */,
 				AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */,
 				F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */,
 				F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */,
+				F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */,
 			);
 			name = QBPopupMenu;
 			path = ../../QBPopupMenu;
@@ -227,8 +225,8 @@
 				AAD226FB183F91C300C27616 /* ViewController.m in Sources */,
 				AAD226F5183F91C300C27616 /* AppDelegate.m in Sources */,
 				AA7C7DAF184C791F00CF859B /* QBPopupMenu.m in Sources */,
-				AA7C7DB3184C791F00CF859B /* QBPopupMenuPagenatorView.m in Sources */,
 				AAD226F1183F91C300C27616 /* main.m in Sources */,
+				F942F12A1F60846F0042EE24 /* QBPopupMenuPagenatorView.swift in Sources */,
 				F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */,
 				F9AAE9371F5F3D9F006ED678 /* QBPopupMenuItem.swift in Sources */,
 				AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */,

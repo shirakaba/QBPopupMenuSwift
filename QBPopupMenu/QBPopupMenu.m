@@ -7,10 +7,7 @@
 //
 
 #import "QBPopupMenu.h"
-
 #import "QBPopupMenuItemView.h"
-#import "QBPopupMenuPagenatorView.h"
-
 #import "QBPopupMenuDemo-Swift.h"
 
 static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
@@ -40,11 +37,6 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     return [QBPopupMenuItemView class];
 }
 
-+ (Class)pagenatorViewClass
-{
-    return [QBPopupMenuPagenatorView class];
-}
-
 + (instancetype)popupMenuWithItems:(NSArray *)items
 {
     return [[self alloc] initWithItems:items];
@@ -65,7 +57,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
         self.height = 36;
         self.cornerRadius = 8;
         self.arrowSize = 9;
-        self.arrowDirection = QBPopupMenuArrowDirectionDefault;
+        self.arrowDirection = QBPopupMenuArrowDirectionAuto;
         self.popupMenuInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         self.margin = 2;
         
@@ -112,7 +104,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     // Decide arrow direction
     QBPopupMenuArrowDirection arrowDirection = self.arrowDirection;
     
-    if (arrowDirection == QBPopupMenuArrowDirectionDefault) {
+    if (arrowDirection == QBPopupMenuArrowDirectionAuto) {
         if ((targetRect.origin.y - (self.height + self.arrowSize)) >= self.popupMenuInsets.top) {
             arrowDirection = QBPopupMenuArrowDirectionDown;
         }
@@ -345,7 +337,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     NSUInteger numberOfPages = self.groupedItemViews.count;
     
     if (numberOfPages > 1 && page != 0) {
-        QBPopupMenuPagenatorView *leftPagenatorView = [[[self class] pagenatorViewClass] leftPagenatorViewWithTarget:self action:@selector(showPreviousPage)];
+        QBPopupMenuPagenatorView *leftPagenatorView = [[QBPopupMenuPagenatorView alloc] initWithDirection:QBPopupMenuArrowDirectionLeft action:^(void) { [self showPreviousPage]; }];
         
         [self addSubview:leftPagenatorView];
         [visibleItemViews addObject:leftPagenatorView];
@@ -359,7 +351,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     }
     
     if (numberOfPages > 1 && page != numberOfPages - 1) {
-        QBPopupMenuPagenatorView *rightPagenatorView = [[[self class] pagenatorViewClass] rightPagenatorViewWithTarget:self action:@selector(showNextPage)];
+        QBPopupMenuPagenatorView *rightPagenatorView = [[QBPopupMenuPagenatorView alloc] initWithDirection:QBPopupMenuArrowDirectionRight action:^(void) { [self showNextPage]; }];
         
         [self addSubview:rightPagenatorView];
         [visibleItemViews addObject:rightPagenatorView];

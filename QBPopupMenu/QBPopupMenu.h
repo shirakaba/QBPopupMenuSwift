@@ -11,6 +11,7 @@
 @class QBPopupMenu;
 @class QBPopupMenuItemView;
 @class QBPopupMenuPagenatorView;
+typedef NS_ENUM(NSInteger, QBPopupMenuArrowDirection);
 
 @protocol QBPopupMenuDelegate <NSObject>
 
@@ -21,14 +22,6 @@
 - (void)popupMenuDidDisappear:(QBPopupMenu *)popupMenu;
 
 @end
-
-typedef NS_ENUM(NSUInteger, QBPopupMenuArrowDirection) {
-    QBPopupMenuArrowDirectionDefault,
-    QBPopupMenuArrowDirectionUp,
-    QBPopupMenuArrowDirectionDown,
-    QBPopupMenuArrowDirectionLeft,
-    QBPopupMenuArrowDirectionRight
-};
 
 @interface QBPopupMenu : UIView
 
