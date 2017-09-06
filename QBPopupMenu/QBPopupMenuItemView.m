@@ -9,7 +9,6 @@
 #import "QBPopupMenuItemView.h"
 
 #import "QBPopupMenu.h"
-#import "QBPopupMenuItem.h"
 
 @interface QBPopupMenuItemView ()
 
@@ -95,8 +94,8 @@
 
 - (void)performAction
 {
-    if (self.item.target && self.item.action) {
-        [self.item.target performSelector:self.item.action withObject:nil afterDelay:0];
+    if (self.item.action) {
+        self.item.action();
     }
     
     // Close popup menu
