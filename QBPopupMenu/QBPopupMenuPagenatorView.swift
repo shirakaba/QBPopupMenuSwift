@@ -30,6 +30,7 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView {
         
         let image = arrowImage(direction: direction)
         button.setImage(image, for: .normal)
+        button.setImage(image, for: .highlighted)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,17 +53,15 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView {
         let size = CGSize(width: 10, height: 10)
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 
-        UIGraphicsBeginImageContextWithOptions(size, false, 0) //TODO: 1?
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
         
         guard let context = UIGraphicsGetCurrentContext() else {
             return nil
         }
         
         context.saveGState()
-        
-        let path = arrowPathIn(rect: rect, direction:direction)
-        context.addPath(path)
-        
+
+        context.addPath(arrowPathIn(rect: rect, direction:direction))
         context.setFillColor(UIColor.white.cgColor)
         context.fillPath()
         
