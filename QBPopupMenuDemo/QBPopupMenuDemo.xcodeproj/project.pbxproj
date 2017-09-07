@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */; };
 		AA7C7DAF184C791F00CF859B /* QBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA5184C791F00CF859B /* QBPopupMenu.m */; };
-		AA7C7DB1184C791F00CF859B /* QBPopupMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA9184C791F00CF859B /* QBPopupMenuItemView.m */; };
 		AA7FA185184321600044F5D7 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA7FA183184321600044F5D7 /* background.jpg */; };
 		AAD226E5183F91C300C27616 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E4183F91C300C27616 /* Foundation.framework */; };
 		AAD226E7183F91C300C27616 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E6183F91C300C27616 /* CoreGraphics.framework */; };
@@ -24,6 +23,7 @@
 		F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */; };
 		F9AAE9341F5F3D0F006ED678 /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9AAE9331F5F3D0F006ED678 /* TODO.txt */; };
 		F9AAE9371F5F3D9F006ED678 /* QBPopupMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */; };
+		F9BA79D41F61CFC300B43343 /* QBPopupMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +31,6 @@
 		AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPlasticPopupMenu.m; sourceTree = "<group>"; };
 		AA7C7DA4184C791F00CF859B /* QBPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenu.h; sourceTree = "<group>"; };
 		AA7C7DA5184C791F00CF859B /* QBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenu.m; sourceTree = "<group>"; };
-		AA7C7DA8184C791F00CF859B /* QBPopupMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPopupMenuItemView.h; sourceTree = "<group>"; };
-		AA7C7DA9184C791F00CF859B /* QBPopupMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPopupMenuItemView.m; sourceTree = "<group>"; };
 		AA7FA183184321600044F5D7 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		AAD226E1183F91C300C27616 /* QBPopupMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QBPopupMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD226E4183F91C300C27616 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -53,6 +51,7 @@
 		F9AAE9331F5F3D0F006ED678 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		F9AAE9351F5F3D9F006ED678 /* QBPopupMenuDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QBPopupMenuDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuItem.swift; sourceTree = "<group>"; };
+		F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,13 +74,12 @@
 				F9AAE9351F5F3D9F006ED678 /* QBPopupMenuDemo-Bridging-Header.h */,
 				AA7C7DA4184C791F00CF859B /* QBPopupMenu.h */,
 				AA7C7DA5184C791F00CF859B /* QBPopupMenu.m */,
-				AA7C7DA8184C791F00CF859B /* QBPopupMenuItemView.h */,
-				AA7C7DA9184C791F00CF859B /* QBPopupMenuItemView.m */,
 				AA7C7DA2184C791F00CF859B /* QBPlasticPopupMenu.h */,
 				AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */,
 				F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */,
 				F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */,
 				F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */,
+				F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */,
 			);
 			name = QBPopupMenu;
 			path = ../../QBPopupMenu;
@@ -222,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9BA79D41F61CFC300B43343 /* QBPopupMenuItemView.swift in Sources */,
 				AAD226FB183F91C300C27616 /* ViewController.m in Sources */,
 				AAD226F5183F91C300C27616 /* AppDelegate.m in Sources */,
 				AA7C7DAF184C791F00CF859B /* QBPopupMenu.m in Sources */,
@@ -230,7 +229,6 @@
 				F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */,
 				F9AAE9371F5F3D9F006ED678 /* QBPopupMenuItem.swift in Sources */,
 				AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */,
-				AA7C7DB1184C791F00CF859B /* QBPopupMenuItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

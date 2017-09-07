@@ -7,7 +7,6 @@
 //
 
 #import "QBPopupMenu.h"
-#import "QBPopupMenuItemView.h"
 #import "QBPopupMenuDemo-Swift.h"
 
 static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
@@ -31,11 +30,6 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
 @end
 
 @implementation QBPopupMenu
-
-+ (Class)itemViewClass
-{
-    return [QBPopupMenuItemView class];
-}
 
 + (instancetype)popupMenuWithItems:(NSArray *)items
 {
@@ -263,8 +257,7 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     NSMutableArray *itemViews = [NSMutableArray array];
     
     for (QBPopupMenuItem *item in self.items) {
-        QBPopupMenuItemView *itemView = [[[self class] itemViewClass] itemViewWithItem:item];
-        itemView.popupMenu = self;
+        QBPopupMenuItemView *itemView = [[QBPopupMenuItemView alloc] initWithItem:item popupMenu:self];
         
         [itemViews addObject:itemView];
     }

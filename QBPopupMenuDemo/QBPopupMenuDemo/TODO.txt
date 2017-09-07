@@ -4,3 +4,7 @@ Remove occurences of NSObject
 Use structures and Swift syntax, default parameters, varargs, enums
 Remove bridging header
 check memory leaks
+readme - update, check github language tags
+public/private access
+remove all ";"
+swift package manager

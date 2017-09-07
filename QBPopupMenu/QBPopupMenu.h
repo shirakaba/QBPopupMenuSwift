@@ -46,10 +46,6 @@ typedef NS_ENUM(NSInteger, QBPopupMenuArrowDirection);
 - (void)dismissAnimated:(BOOL)animated;
 - (void)updateWithTargetRect:(CGRect)targetRect;
 
-// NOTE: When subclassing this class, use these methods to customize the appearance.
-+ (Class)itemViewClass;
-+ (Class)pagenatorViewClass;
-
 - (CGMutablePathRef)arrowPathInRect:(CGRect)rect direction:(QBPopupMenuArrowDirection)direction CF_RETURNS_RETAINED;
 - (CGMutablePathRef)headPathInRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius CF_RETURNS_RETAINED;
 - (CGMutablePathRef)tailPathInRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius CF_RETURNS_RETAINED;

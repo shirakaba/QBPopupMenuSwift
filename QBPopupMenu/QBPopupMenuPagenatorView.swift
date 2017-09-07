@@ -26,7 +26,7 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView {
     init(direction: QBPopupMenuArrowDirection, action: (()->())?)
     {
         self.action = action
-        super.init(item: nil)
+        super.init(item: nil, popupMenu: nil)
         
         let image = arrowImage(direction: direction)
         button.setImage(image, for: .normal)
