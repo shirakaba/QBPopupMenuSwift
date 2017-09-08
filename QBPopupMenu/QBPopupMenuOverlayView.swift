@@ -1,9 +1,5 @@
-//
-//  QBPopupMenuOverlayView.swift
-//  QBPopupMenuDemo
-//
-//  Created by Dusan Saiko on 06/09/2017.
-//
+//  QBPopupMenuDemo rewritten into Swift
+//  https://github.com/dsaiko/QBPopupMenu/
 
 import Foundation
 

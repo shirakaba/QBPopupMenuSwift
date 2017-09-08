@@ -1,9 +1,5 @@
-//
-//  QBPopupMenuItemView.swift
-//  QBPopupMenuDemo
-//
-//  Created by Dusan Saiko on 07/09/2017.
-//
+//  QBPopupMenuDemo rewritten into Swift
+//  https://github.com/dsaiko/QBPopupMenu/
 
 import Foundation
 
