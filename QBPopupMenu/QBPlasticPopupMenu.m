@@ -43,7 +43,7 @@
 {
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathMoveToPoint(path, NULL, rect.origin.x, rect.origin.y);
-    CGPathMoveToPoint(path, NULL, rect.origin.x + rect.size.width - cornerRadius, rect.origin.y);
+    CGPathAddLineToPoint(path, NULL, rect.origin.x + rect.size.width - cornerRadius, rect.origin.y);
     CGPathAddArcToPoint(path, NULL, rect.origin.x + rect.size.width, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + cornerRadius, cornerRadius);
     CGPathAddLineToPoint(path, NULL, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
     CGPathAddLineToPoint(path, NULL, rect.origin.x, rect.origin.y + rect.size.height);

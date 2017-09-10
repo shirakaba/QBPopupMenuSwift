@@ -27,7 +27,6 @@ typedef NS_ENUM(NSInteger, QBPopupMenuArrowDirection);
 
 @property (nonatomic, weak) id<QBPopupMenuDelegate> delegate;
 
-@property (nonatomic, assign, getter = isVisible, readonly) BOOL visible;
 @property (nonatomic, copy) NSArray *items;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, assign) CGFloat cornerRadius;

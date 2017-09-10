@@ -8,3 +8,7 @@ readme - update, check github language tags
 public/private access
 remove all ";"
 swift package manager
+document
+uiview - main thread check
+remove all @objc, selectors, nsobject etc
+static methods

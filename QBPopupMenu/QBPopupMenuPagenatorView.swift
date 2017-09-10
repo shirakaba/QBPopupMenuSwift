@@ -13,7 +13,7 @@ import UIKit
     case right
 }
 
-class QBPopupMenuPagenatorView: QBPopupMenuItemView {
+class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
     static let pagenatorWidth = CGFloat(10 + 10 * 2)
     
@@ -71,25 +71,26 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView {
     }
     
     private func arrowPathIn(rect: CGRect, direction: QBPopupMenuArrowDirection) -> CGPath {
-        let path = CGMutablePath();
-            
+        
         switch (direction) {
         case .left:
-            path.move(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y))
-            path.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height))
-            path.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height / 2.0))
+            return drawPath([
+                .moveTo(rect.origin.x + rect.size.width, rect.origin.y),
+                .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height),
+                .lineTo(rect.origin.x, rect.origin.y + rect.size.height / 2.0)
+            ])
 
         case .right:
-            path.move(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
-            path.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
-            path.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height / 2.0))
-            
+            return drawPath([
+                .moveTo(rect.origin.x, rect.origin.y),
+                .lineTo(rect.origin.x, rect.origin.y + rect.size.height),
+                .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height / 2.0)
+             ])
+
         default:
             assertionFailure( "Pagenator arrow direction can only be left or right.")
+            return CGMutablePath()
         }
-        
-        path.closeSubpath()
-        return path
     }
 
 }

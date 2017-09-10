@@ -24,6 +24,9 @@
 		F9AAE9341F5F3D0F006ED678 /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9AAE9331F5F3D0F006ED678 /* TODO.txt */; };
 		F9AAE9371F5F3D9F006ED678 /* QBPopupMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */; };
 		F9BA79D41F61CFC300B43343 /* QBPopupMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */; };
+		F9EC7D041F632AA100C3B165 /* QBPlasticPopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EC7D031F632AA100C3B165 /* QBPlasticPopupMenu.swift */; };
+		F9EC7D061F63300200C3B165 /* QBPopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EC7D051F63300200C3B165 /* QBPopupMenu.swift */; };
+		F9F7308A1F6424540030C68D /* QBPopupMenuDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F730891F6424540030C68D /* QBPopupMenuDrawing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +55,9 @@
 		F9AAE9351F5F3D9F006ED678 /* QBPopupMenuDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QBPopupMenuDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuItem.swift; sourceTree = "<group>"; };
 		F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuItemView.swift; sourceTree = "<group>"; };
+		F9EC7D031F632AA100C3B165 /* QBPlasticPopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPlasticPopupMenu.swift; sourceTree = "<group>"; };
+		F9EC7D051F63300200C3B165 /* QBPopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenu.swift; sourceTree = "<group>"; };
+		F9F730891F6424540030C68D /* QBPopupMenuDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuDrawing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,9 @@
 				F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */,
 				F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */,
 				F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */,
+				F9EC7D031F632AA100C3B165 /* QBPlasticPopupMenu.swift */,
+				F9EC7D051F63300200C3B165 /* QBPopupMenu.swift */,
+				F9F730891F6424540030C68D /* QBPopupMenuDrawing.swift */,
 			);
 			name = QBPopupMenu;
 			path = ../../QBPopupMenu;
@@ -227,6 +236,9 @@
 				AAD226F1183F91C300C27616 /* main.m in Sources */,
 				F942F12A1F60846F0042EE24 /* QBPopupMenuPagenatorView.swift in Sources */,
 				F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */,
+				F9F7308A1F6424540030C68D /* QBPopupMenuDrawing.swift in Sources */,
+				F9EC7D041F632AA100C3B165 /* QBPlasticPopupMenu.swift in Sources */,
+				F9EC7D061F63300200C3B165 /* QBPopupMenu.swift in Sources */,
 				F9AAE9371F5F3D9F006ED678 /* QBPopupMenuItem.swift in Sources */,
 				AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */,
 			);
