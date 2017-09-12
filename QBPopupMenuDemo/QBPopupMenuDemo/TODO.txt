@@ -14,3 +14,5 @@ remove all @objc, selectors, nsobject etc
 static methods
 weak vs strong
 delete unnecessary self.
+if (), switch ()
+member variables vs immutable?
