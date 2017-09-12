@@ -13,13 +13,13 @@ import UIKit
     case right
 }
 
-class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
+@objc class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
-    static let pagenatorWidth = CGFloat(10 + 10 * 2)
+    @objc static let pagenatorWidth = CGFloat(10 + 10 * 2)
     
     let action: (()->())?
 
-    init(direction: QBPopupMenuArrowDirection, action: (()->())?)
+    @objc init(direction: QBPopupMenuArrowDirection, action: (()->())?)
     {
         self.action = action
         super.init(item: nil, popupMenu: nil)

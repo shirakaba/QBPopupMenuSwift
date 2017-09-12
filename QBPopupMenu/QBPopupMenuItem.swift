@@ -4,13 +4,13 @@
 import Foundation
 import UIKit
 
-class QBPopupMenuItem: NSObject {
+@objc class QBPopupMenuItem: NSObject {
 
     let title: String?
     let image: UIImage?
     let action: (()->())?
     
-    init(title: String?, image: UIImage?, action: (()->())?) {
+    @objc init(title: String?, image: UIImage?, action: (()->())?) {
         precondition(title != nil || image != nil, "Title or image needs to be set.")
         
         self.title = title

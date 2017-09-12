@@ -1,6 +1,6 @@
 
 Rewrite all to swift, including main
-Remove occurences of NSObject
+Remove occurences of NSObject, @objc
 Use structures and Swift syntax, default parameters, varargs, enums
 Remove bridging header
 check memory leaks
@@ -12,3 +12,5 @@ document
 uiview - main thread check
 remove all @objc, selectors, nsobject etc
 static methods
+weak vs strong
+delete unnecessary self.

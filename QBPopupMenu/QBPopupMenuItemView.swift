@@ -3,13 +3,13 @@
 
 import Foundation
 
-class QBPopupMenuItemView: UIView {
+@objc class QBPopupMenuItemView: UIView {
 
-    let popupMenu: QBPopupMenu?
-    let button: UIButton
-    let item: QBPopupMenuItem?
+    @objc let popupMenu: QBPopupMenu?
+    @objc let button: UIButton
+    @objc let item: QBPopupMenuItem?
 
-    init(item: QBPopupMenuItem?, popupMenu: QBPopupMenu?) {
+    @objc init(item: QBPopupMenuItem?, popupMenu: QBPopupMenu?) {
 
         self.popupMenu = popupMenu
         self.item = item
@@ -50,12 +50,12 @@ class QBPopupMenuItemView: UIView {
         fatalError("init(coder:) can not be used.")
     }
 
-    func performAction() {
+    @objc func performAction() {
         item?.action?()
         popupMenu?.dismiss(animated: true)
     }
 
-    var image: UIImage? {
+    @objc var image: UIImage? {
         get {
             return button.backgroundImage(for: .normal)
         }
@@ -65,7 +65,7 @@ class QBPopupMenuItemView: UIView {
         }
     }
 
-    var highlightedImage: UIImage? {
+    @objc var highlightedImage: UIImage? {
         get {
             return button.backgroundImage(for: .highlighted)
         }

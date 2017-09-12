@@ -3,12 +3,12 @@
 
 import Foundation
 
-class QBPopupMenuOverlayView : UIView
+@objc class QBPopupMenuOverlayView : UIView
 {
 
     private(set) weak var popupMenu: QBPopupMenu?
     
-    init(frame: CGRect, popupMenu: QBPopupMenu) {
+    @objc init(frame: CGRect, popupMenu: QBPopupMenu) {
         self.popupMenu = popupMenu
         super.init(frame: frame)
         setBackround()
