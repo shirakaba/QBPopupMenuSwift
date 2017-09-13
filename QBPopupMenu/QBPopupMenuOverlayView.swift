@@ -2,6 +2,7 @@
 //  https://github.com/dsaiko/QBPopupMenu/
 
 import Foundation
+import UIKit
 
 @objc class QBPopupMenuOverlayView : UIView
 {

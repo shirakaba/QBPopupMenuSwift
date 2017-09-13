@@ -4,22 +4,13 @@
 import Foundation
 import UIKit
 
-//TODO: move to different place
-@objc enum QBPopupMenuArrowDirection: Int {
-    case auto = 0
-    case up
-    case down
-    case left
-    case right
-}
+class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
-@objc class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
-
-    @objc static let pagenatorWidth = CGFloat(10 + 10 * 2)
+    static let pagenatorWidth = CGFloat(10 + 10 * 2)
     
     let action: (()->())?
 
-    @objc init(direction: QBPopupMenuArrowDirection, action: (()->())?)
+    init(direction: QBPopupMenuArrowDirection, action: (()->())?)
     {
         self.action = action
         super.init(item: nil, popupMenu: nil)

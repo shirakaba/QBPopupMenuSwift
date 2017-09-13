@@ -3,7 +3,7 @@
 
 import UIKit
 
-class QBPlasticPopupMenuNew : QBPopupMenu, QBPopupMenuDrawing
+class QBPlasticPopupMenuNew : QBPopupMenu
 {
     
     func upperHeadPathIn(rect: CGRect, cornerRadius: CGFloat) -> CGPath {

@@ -2,10 +2,11 @@
 //  https://github.com/dsaiko/QBPopupMenu/
 
 import Foundation
+import UIKit
 
 @objc class QBPopupMenuItemView: UIView {
 
-    @objc let popupMenu: QBPopupMenu?
+    @objc weak var popupMenu: QBPopupMenu?
     @objc let button: UIButton
     @objc let item: QBPopupMenuItem?
 

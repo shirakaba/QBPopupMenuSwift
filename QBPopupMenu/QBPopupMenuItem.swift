@@ -4,6 +4,7 @@
 import Foundation
 import UIKit
 
+//TODO: struct
 @objc class QBPopupMenuItem: NSObject {
 
     let title: String?
