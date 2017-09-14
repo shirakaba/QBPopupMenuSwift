@@ -15,7 +15,5 @@ weak vs strong
 delete unnecessary self.
 if (), switch ()
 member variables vs immutable?
-app icon
-fix mouse out area?
 make config imutable
 separator width and color, text color
