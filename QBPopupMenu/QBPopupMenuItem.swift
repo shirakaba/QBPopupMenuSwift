@@ -1,23 +1,19 @@
 //  QBPopupMenuDemo rewritten into Swift
 //  https://github.com/dsaiko/QBPopupMenu/
 
-import Foundation
 import UIKit
 
-//TODO: struct
-@objc class QBPopupMenuItem: NSObject {
+public struct QBPopupMenuItem {
 
-    let title: String?
-    let image: UIImage?
-    let action: (()->())?
+    public let title: String?
+    public let image: UIImage?
+    public let action: (()->())?
     
-    @objc init(title: String?, image: UIImage?, action: (()->())?) {
+    public init(title: String? = nil, image: UIImage? = nil, action: (()->())? = nil) {
         precondition(title != nil || image != nil, "Title or image needs to be set.")
         
         self.title = title
         self.image = image
         self.action = action
-
-        super.init()
     }
 }

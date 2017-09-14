@@ -6,14 +6,13 @@ import UIKit
 
 class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
-    static let pagenatorWidth = CGFloat(10 + 10 * 2)
-    
     let action: (()->())?
 
-    init(direction: QBPopupMenuArrowDirection, action: (()->())?)
+    init(popupMenu: QBPopupMenu, direction: QBPopupMenuArrowDirection, action: (()->())? = nil)
     {
         self.action = action
-        super.init(item: nil, popupMenu: nil)
+        
+        super.init(popupMenu: popupMenu)
         
         let image = arrowImage(direction: direction)
         button.setImage(image, for: .normal)
@@ -30,7 +29,7 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var buttonSize = button.sizeThatFits(.zero)
-        buttonSize.width = QBPopupMenuPagenatorView.pagenatorWidth
+        buttonSize.width = popupMenu?.pagenatorWidth ?? 0
         
         return buttonSize
     }
@@ -83,5 +82,4 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
             return CGMutablePath()
         }
     }
-
 }

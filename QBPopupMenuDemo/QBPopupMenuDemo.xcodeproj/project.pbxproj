@@ -13,11 +13,10 @@
 		AAD226E7183F91C300C27616 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E6183F91C300C27616 /* CoreGraphics.framework */; };
 		AAD226E9183F91C300C27616 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E8183F91C300C27616 /* UIKit.framework */; };
 		AAD226EF183F91C300C27616 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAD226ED183F91C300C27616 /* InfoPlist.strings */; };
-		AAD226F1183F91C300C27616 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD226F0183F91C300C27616 /* main.m */; };
-		AAD226F5183F91C300C27616 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD226F4183F91C300C27616 /* AppDelegate.m */; };
 		AAD226F8183F91C300C27616 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD226F6183F91C300C27616 /* Main.storyboard */; };
-		AAD226FB183F91C300C27616 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD226FA183F91C300C27616 /* ViewController.m */; };
 		AAD226FD183F91C300C27616 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD226FC183F91C300C27616 /* Images.xcassets */; };
+		F93C39031F69FECD001AA31E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93C39021F69FECD001AA31E /* AppDelegate.swift */; };
+		F93C39231F69FFF0001AA31E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93C39221F69FFF0001AA31E /* ViewController.swift */; };
 		F942F12A1F60846F0042EE24 /* QBPopupMenuPagenatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */; };
 		F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */; };
 		F9AAE9341F5F3D0F006ED678 /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = F9AAE9331F5F3D0F006ED678 /* TODO.txt */; };
@@ -38,18 +37,14 @@
 		AAD226E8183F91C300C27616 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AAD226EC183F91C300C27616 /* QBPopupMenuDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QBPopupMenuDemo-Info.plist"; sourceTree = "<group>"; };
 		AAD226EE183F91C300C27616 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AAD226F0183F91C300C27616 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AAD226F2183F91C300C27616 /* QBPopupMenuDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QBPopupMenuDemo-Prefix.pch"; sourceTree = "<group>"; };
-		AAD226F3183F91C300C27616 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		AAD226F4183F91C300C27616 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AAD226F7183F91C300C27616 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AAD226F9183F91C300C27616 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		AAD226FA183F91C300C27616 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AAD226FC183F91C300C27616 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F93C39021F69FECD001AA31E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F93C39221F69FFF0001AA31E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuPagenatorView.swift; sourceTree = "<group>"; };
 		F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuOverlayView.swift; sourceTree = "<group>"; };
 		F9AAE9331F5F3D0F006ED678 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
-		F9AAE9351F5F3D9F006ED678 /* QBPopupMenuDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QBPopupMenuDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuItem.swift; sourceTree = "<group>"; };
 		F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPopupMenuItemView.swift; sourceTree = "<group>"; };
 		F9EC7D031F632AA100C3B165 /* QBPlasticPopupMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QBPlasticPopupMenu.swift; sourceTree = "<group>"; };
@@ -74,7 +69,6 @@
 		AA7C7DA1184C791F00CF859B /* QBPopupMenu */ = {
 			isa = PBXGroup;
 			children = (
-				F9AAE9351F5F3D9F006ED678 /* QBPopupMenuDemo-Bridging-Header.h */,
 				AA7C7DA2184C791F00CF859B /* QBPlasticPopupMenu.h */,
 				AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */,
 				F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */,
@@ -120,13 +114,11 @@
 			isa = PBXGroup;
 			children = (
 				AA7C7DA1184C791F00CF859B /* QBPopupMenu */,
-				AAD226F3183F91C300C27616 /* AppDelegate.h */,
-				AAD226F4183F91C300C27616 /* AppDelegate.m */,
-				AAD226F9183F91C300C27616 /* ViewController.h */,
-				AAD226FA183F91C300C27616 /* ViewController.m */,
 				AAD22719183F91CC00C27616 /* Resources */,
 				AAD226EB183F91C300C27616 /* Supporting Files */,
 				F9AAE9331F5F3D0F006ED678 /* TODO.txt */,
+				F93C39021F69FECD001AA31E /* AppDelegate.swift */,
+				F93C39221F69FFF0001AA31E /* ViewController.swift */,
 			);
 			path = QBPopupMenuDemo;
 			sourceTree = "<group>";
@@ -136,7 +128,6 @@
 			children = (
 				AAD226EC183F91C300C27616 /* QBPopupMenuDemo-Info.plist */,
 				AAD226ED183F91C300C27616 /* InfoPlist.strings */,
-				AAD226F0183F91C300C27616 /* main.m */,
 				AAD226F2183F91C300C27616 /* QBPopupMenuDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -224,11 +215,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F93C39031F69FECD001AA31E /* AppDelegate.swift in Sources */,
 				F9BA79D41F61CFC300B43343 /* QBPopupMenuItemView.swift in Sources */,
-				AAD226FB183F91C300C27616 /* ViewController.m in Sources */,
-				AAD226F5183F91C300C27616 /* AppDelegate.m in Sources */,
-				AAD226F1183F91C300C27616 /* main.m in Sources */,
 				F942F12A1F60846F0042EE24 /* QBPopupMenuPagenatorView.swift in Sources */,
+				F93C39231F69FFF0001AA31E /* ViewController.swift in Sources */,
 				F99E13081F607E6B009B010C /* QBPopupMenuOverlayView.swift in Sources */,
 				F9F7308A1F6424540030C68D /* QBPopupMenuDrawing.swift in Sources */,
 				F9EC7D041F632AA100C3B165 /* QBPlasticPopupMenu.swift in Sources */,
@@ -359,14 +349,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "QBPopupMenuDemo/QBPopupMenuDemo-Prefix.pch";
 				INFOPLIST_FILE = "QBPopupMenuDemo/QBPopupMenuDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.saiko.QBPopupMenuDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../QBPopupMenu/QBPopupMenuDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
@@ -379,14 +366,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "QBPopupMenuDemo/QBPopupMenuDemo-Prefix.pch";
 				INFOPLIST_FILE = "QBPopupMenuDemo/QBPopupMenuDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.saiko.QBPopupMenuDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../QBPopupMenu/QBPopupMenuDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;

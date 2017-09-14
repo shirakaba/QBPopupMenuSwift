@@ -4,13 +4,13 @@
 import Foundation
 import UIKit
 
-@objc class QBPopupMenuItemView: UIView {
+class QBPopupMenuItemView: UIView {
 
-    @objc weak var popupMenu: QBPopupMenu?
-    @objc let button: UIButton
-    @objc let item: QBPopupMenuItem?
+    weak var popupMenu: QBPopupMenu?
+    let button: UIButton
+    let item: QBPopupMenuItem?
 
-    @objc init(item: QBPopupMenuItem?, popupMenu: QBPopupMenu?) {
+    init(popupMenu: QBPopupMenu, item: QBPopupMenuItem? = nil) {
 
         self.popupMenu = popupMenu
         self.item = item
@@ -56,7 +56,7 @@ import UIKit
         popupMenu?.dismiss(animated: true)
     }
 
-    @objc var image: UIImage? {
+    var image: UIImage? {
         get {
             return button.backgroundImage(for: .normal)
         }
@@ -66,7 +66,7 @@ import UIKit
         }
     }
 
-    @objc var highlightedImage: UIImage? {
+    var highlightedImage: UIImage? {
         get {
             return button.backgroundImage(for: .highlighted)
         }

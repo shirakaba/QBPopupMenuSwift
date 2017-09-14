@@ -1,26 +1,21 @@
 //  QBPopupMenuDemo rewritten into Swift
 //  https://github.com/dsaiko/QBPopupMenu/
 
-import Foundation
 import UIKit
 
-@objc class QBPopupMenuOverlayView : UIView
+class QBPopupMenuOverlayView: UIView
 {
 
     private(set) weak var popupMenu: QBPopupMenu?
     
-    @objc init(frame: CGRect, popupMenu: QBPopupMenu) {
+    init(frame: CGRect, popupMenu: QBPopupMenu) {
         self.popupMenu = popupMenu
         super.init(frame: frame)
-        setBackround()
+        backgroundColor = UIColor.clear
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) can not be used.")
-    }
-    
-    func setBackround() {
-        backgroundColor = UIColor.clear
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

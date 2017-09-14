@@ -18,21 +18,21 @@ enum QBPopupMenuArrowDirection {
     case right
 }
 
-@objc class QBPopupMenu: UIView, QBPopupMenuDrawing {
+class QBPopupMenu: UIView, QBPopupMenuDrawing {
 
-    private(set) var itemViews: [QBPopupMenuItemView]!
-    var groupedItemViews: [[QBPopupMenuItemView]]?
-    var visibleItemViews = [QBPopupMenuItemView]()
+    private var itemViews: [QBPopupMenuItemView]!
+    private var groupedItemViews: [[QBPopupMenuItemView]]?
+    private var visibleItemViews = [QBPopupMenuItemView]()
     
     var popupMenuInsets: UIEdgeInsets            = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     var margin: CGFloat                          = 2
     var cornerRadius: CGFloat                    = 8
     var color: UIColor                           = UIColor.black.withAlphaComponent(0.8)
-    @objc var highlightedColor: UIColor                = UIColor.darkGray.withAlphaComponent(0.8)
+    var highlightedColor: UIColor                = UIColor.darkGray.withAlphaComponent(0.8)
     var arrowSize: CGFloat                       = 9
     var popupMenuAnimationDuration: TimeInterval = 0.2
     var height: CGFloat                          = 36
-
+    var pagenatorWidth: CGFloat                  = 10 + 10 * 2
     
     private var targetRect: CGRect?
     private weak var view: UIView?
@@ -43,13 +43,13 @@ enum QBPopupMenuArrowDirection {
 
     weak var  delegate: QBPopupMenuDelegate?
 
-    @objc init(items: [QBPopupMenuItem]) {
+    init(items: [QBPopupMenuItem]) {
         super.init(frame: .zero)
 
         itemViews = [QBPopupMenuItemView]()
 
         for item in items {
-            itemViews.append(QBPopupMenuItemView(item: item, popupMenu: self))
+            itemViews.append(QBPopupMenuItemView(popupMenu: self, item: item))
         }
 
         isOpaque = false
@@ -61,7 +61,7 @@ enum QBPopupMenuArrowDirection {
         fatalError("init(coder:) can not be used.")
     }
 
-    @objc func showIn(view: UIView, targetRect: CGRect, animated: Bool) {
+    func showIn(view: UIView, targetRect: CGRect, animated: Bool) {
         
         var topMenuInset = self.popupMenuInsets.top
 
@@ -144,8 +144,6 @@ enum QBPopupMenuArrowDirection {
     
     func groupItemViewsWithMaximumWidth(_ maximumWidth: CGFloat) {
         var groupedItemViews = [[QBPopupMenuItemView]]()
-
-        let pagenatorWidth = QBPopupMenuPagenatorView.pagenatorWidth
 
         // Create new array
         var itemViews = [QBPopupMenuItemView]()
@@ -243,7 +241,7 @@ enum QBPopupMenuArrowDirection {
         assert(numberOfPages >= page)
 
         if numberOfPages > 1 && page != 0 {
-            let leftPagenatorView = QBPopupMenuPagenatorView(direction: .left) {
+            let leftPagenatorView = QBPopupMenuPagenatorView(popupMenu: self, direction: .left) {
                 self.showPreviousPage()
             }
 
@@ -257,7 +255,7 @@ enum QBPopupMenuArrowDirection {
         }
 
         if page < numberOfPages - 1 {
-            let rightPagenatorView = QBPopupMenuPagenatorView(direction: .right) {
+            let rightPagenatorView = QBPopupMenuPagenatorView(popupMenu: self, direction: .right) {
                 self.showNextPage()
             }
 

@@ -2,7 +2,6 @@
 Rewrite all to swift, including main
 Remove occurences of NSObject, @objc
 Use structures and Swift syntax, default parameters, varargs, enums
-Remove bridging header
 check memory leaks
 readme - update, check github language tags
 public/private access
@@ -16,3 +15,7 @@ weak vs strong
 delete unnecessary self.
 if (), switch ()
 member variables vs immutable?
+app icon
+fix mouse out area?
+make config imutable
+separator width and color, text color
