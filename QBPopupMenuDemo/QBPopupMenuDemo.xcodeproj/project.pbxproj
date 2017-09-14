@@ -12,7 +12,6 @@
 		AAD226E5183F91C300C27616 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E4183F91C300C27616 /* Foundation.framework */; };
 		AAD226E7183F91C300C27616 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E6183F91C300C27616 /* CoreGraphics.framework */; };
 		AAD226E9183F91C300C27616 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E8183F91C300C27616 /* UIKit.framework */; };
-		AAD226EF183F91C300C27616 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAD226ED183F91C300C27616 /* InfoPlist.strings */; };
 		AAD226F8183F91C300C27616 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD226F6183F91C300C27616 /* Main.storyboard */; };
 		AAD226FD183F91C300C27616 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD226FC183F91C300C27616 /* Images.xcassets */; };
 		F93C39031F69FECD001AA31E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93C39021F69FECD001AA31E /* AppDelegate.swift */; };
@@ -28,7 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA7C7DA2184C791F00CF859B /* QBPlasticPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBPlasticPopupMenu.h; sourceTree = "<group>"; };
 		AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPlasticPopupMenu.m; sourceTree = "<group>"; };
 		AA7FA183184321600044F5D7 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		AAD226E1183F91C300C27616 /* QBPopupMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QBPopupMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,8 +34,6 @@
 		AAD226E6183F91C300C27616 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AAD226E8183F91C300C27616 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AAD226EC183F91C300C27616 /* QBPopupMenuDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QBPopupMenuDemo-Info.plist"; sourceTree = "<group>"; };
-		AAD226EE183F91C300C27616 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AAD226F2183F91C300C27616 /* QBPopupMenuDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QBPopupMenuDemo-Prefix.pch"; sourceTree = "<group>"; };
 		AAD226F7183F91C300C27616 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAD226FC183F91C300C27616 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F93C39021F69FECD001AA31E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,15 +65,14 @@
 		AA7C7DA1184C791F00CF859B /* QBPopupMenu */ = {
 			isa = PBXGroup;
 			children = (
-				AA7C7DA2184C791F00CF859B /* QBPlasticPopupMenu.h */,
 				AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */,
-				F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */,
-				F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */,
-				F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */,
-				F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */,
 				F9EC7D031F632AA100C3B165 /* QBPlasticPopupMenu.swift */,
 				F9EC7D051F63300200C3B165 /* QBPopupMenu.swift */,
 				F9F730891F6424540030C68D /* QBPopupMenuDrawing.swift */,
+				F9AAE9361F5F3D9F006ED678 /* QBPopupMenuItem.swift */,
+				F9BA79D31F61CFC300B43343 /* QBPopupMenuItemView.swift */,
+				F99E13071F607E6B009B010C /* QBPopupMenuOverlayView.swift */,
+				F942F1291F60846F0042EE24 /* QBPopupMenuPagenatorView.swift */,
 			);
 			name = QBPopupMenu;
 			path = ../../QBPopupMenu;
@@ -113,12 +108,12 @@
 		AAD226EA183F91C300C27616 /* QBPopupMenuDemo */ = {
 			isa = PBXGroup;
 			children = (
-				AA7C7DA1184C791F00CF859B /* QBPopupMenu */,
-				AAD22719183F91CC00C27616 /* Resources */,
-				AAD226EB183F91C300C27616 /* Supporting Files */,
 				F9AAE9331F5F3D0F006ED678 /* TODO.txt */,
 				F93C39021F69FECD001AA31E /* AppDelegate.swift */,
 				F93C39221F69FFF0001AA31E /* ViewController.swift */,
+				AA7C7DA1184C791F00CF859B /* QBPopupMenu */,
+				AAD22719183F91CC00C27616 /* Resources */,
+				AAD226EB183F91C300C27616 /* Supporting Files */,
 			);
 			path = QBPopupMenuDemo;
 			sourceTree = "<group>";
@@ -127,8 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				AAD226EC183F91C300C27616 /* QBPopupMenuDemo-Info.plist */,
-				AAD226ED183F91C300C27616 /* InfoPlist.strings */,
-				AAD226F2183F91C300C27616 /* QBPopupMenuDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -137,8 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				AA7FA183184321600044F5D7 /* background.jpg */,
-				AAD226F6183F91C300C27616 /* Main.storyboard */,
 				AAD226FC183F91C300C27616 /* Images.xcassets */,
+				AAD226F6183F91C300C27616 /* Main.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -203,7 +196,6 @@
 			files = (
 				F9AAE9341F5F3D0F006ED678 /* TODO.txt in Resources */,
 				AAD226FD183F91C300C27616 /* Images.xcassets in Resources */,
-				AAD226EF183F91C300C27616 /* InfoPlist.strings in Resources */,
 				AA7FA185184321600044F5D7 /* background.jpg in Resources */,
 				AAD226F8183F91C300C27616 /* Main.storyboard in Resources */,
 			);
@@ -232,14 +224,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AAD226ED183F91C300C27616 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AAD226EE183F91C300C27616 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		AAD226F6183F91C300C27616 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

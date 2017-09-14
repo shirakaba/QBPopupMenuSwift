@@ -228,7 +228,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
     }
     
-    private func updateVisibleItemViews() {
+    func updateVisibleItemViews() {
         // Remove all visible item views
         while self.visibleItemViews.count > 0 {
             self.visibleItemViews.removeFirst().removeFromSuperview()
@@ -264,7 +264,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
     }
     
-    private func layoutVisibleItemViews() {
+    func layoutVisibleItemViews() {
         var height = self.height
 
         if self.arrowDirection == .down || self.arrowDirection == .up {
@@ -303,7 +303,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
     }
     
-    private func updatePopupMenuFrameAndArrowPosition() {
+    func updatePopupMenuFrameAndArrowPosition() {
         guard
             let itemView = visibleItemViews.last,
             let targetRect = targetRect,
@@ -378,7 +378,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         self.frame = popupMenuFrame
     }
     
-    private func updatePopupMenuImage() {
+    func updatePopupMenuImage() {
         guard
             let menuImage = popupMenuImage(highlighted: false),
             let menuHighlightedImage = popupMenuImage(highlighted: true)
@@ -437,7 +437,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
                     }
 
                     drawHeadIn(rect: headRect, highlighted: highlighted)
-                    drawBodyIn(rect: bodyRect, lastItem: true, highlighted: highlighted)
+                    drawBodyIn(rect: bodyRect, firstItem: true, lastItem: true, highlighted: highlighted)
                     drawTailIn(rect: tailRect, highlighted: highlighted)
                 } else {
                     var headRect = CGRect.zero
@@ -452,7 +452,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
                     }
 
                     drawHeadIn(rect: headRect, highlighted: highlighted)
-                    drawBodyIn(rect: bodyRect, lastItem: false, highlighted: highlighted)
+                    drawBodyIn(rect: bodyRect, firstItem: true, lastItem: false, highlighted: highlighted)
                 }
             } else if i == visibleItemViews.count - 1 {
                 var bodyRect = CGRect.zero
@@ -466,12 +466,12 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
                     tailRect = CGRect(x: frame.origin.x + frame.size.width - cornerRadius, y: y, width: cornerRadius, height: height)
                 }
 
-                drawBodyIn(rect: bodyRect, lastItem: true, highlighted: highlighted)
+                drawBodyIn(rect: bodyRect,  firstItem: false, lastItem: true, highlighted: highlighted)
                 drawTailIn(rect: tailRect, highlighted: highlighted)
             } else {
                 // Draw body
                 let bodyRect = CGRect(x: frame.origin.x, y: y, width: frame.size.width, height: height)
-                drawBodyIn(rect: bodyRect, lastItem: false, highlighted: highlighted)
+                drawBodyIn(rect: bodyRect, firstItem: false, lastItem: false, highlighted: highlighted)
             }
         }
 
@@ -485,7 +485,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         return image
     }
     
-    private func drawPath(path: CGPath, highlighted:Bool) {
+    func drawPath(path: CGPath, highlighted:Bool) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
         context.saveGState()
@@ -495,7 +495,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         context.restoreGState()
     }
     
-   private func drawArrowIn(rect: CGRect, highlighted:Bool)
+   func drawArrowIn(rect: CGRect, highlighted:Bool)
     {
         drawPath(path: arrowPathIn(rect: rect), highlighted: highlighted)
 
@@ -507,15 +507,15 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
     }
     
-    private func drawHeadIn(rect: CGRect, highlighted:Bool) {
+    func drawHeadIn(rect: CGRect, highlighted:Bool) {
         drawPath(path: headPathIn(rect: rect), highlighted: highlighted)
     }
     
-    private func drawTailIn(rect: CGRect, highlighted:Bool) {
+    func drawTailIn(rect: CGRect, highlighted:Bool) {
         drawPath(path: tailPathIn(rect: rect), highlighted: highlighted)
     }
 
-    private func drawBodyIn(rect: CGRect, lastItem: Bool, highlighted: Bool) {
+    func drawBodyIn(rect: CGRect, firstItem: Bool, lastItem: Bool, highlighted: Bool) {
         drawPath(path: bodyPathIn(rect: rect), highlighted: highlighted)
 
         // Separator
@@ -524,7 +524,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
     }
 
-    private func drawSeparatorIn(rect: CGRect) {
+    func drawSeparatorIn(rect: CGRect) {
             guard let context = UIGraphicsGetCurrentContext() else {
                 return
             }
@@ -535,7 +535,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
             context.restoreGState()
         }
     
-    private func drawArrowAt(point: CGPoint, highlighted: Bool) {
+    func drawArrowAt(point: CGPoint, highlighted: Bool) {
         var arrowRect = CGRect.zero
 
         switch arrowDirection {
@@ -557,7 +557,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
 
 extension QBPopupMenu {
 
-    private func arrowPathIn(rect: CGRect) -> CGPath {
+    func arrowPathIn(rect: CGRect) -> CGPath {
         switch arrowDirection {
             case .down:
                 return drawPath([
@@ -586,7 +586,7 @@ extension QBPopupMenu {
         }
     }
 
-    private func headPathIn(rect: CGRect) -> CGPath {
+    func headPathIn(rect: CGRect) -> CGPath {
         return drawPath([
                 .moveTo(rect.origin.x, rect.origin.y + cornerRadius),
                 .arcTo (rect.origin.x, rect.origin.y, rect.origin.x + cornerRadius, rect.origin.y, cornerRadius),
@@ -597,7 +597,7 @@ extension QBPopupMenu {
          ])
      }
     
-    private func tailPathIn(rect:CGRect) -> CGPath {
+    func tailPathIn(rect:CGRect) -> CGPath {
         return drawPath([
             .moveTo(rect.origin.x, rect.origin.y),
             .lineTo(rect.origin.x + rect.size.width - cornerRadius, rect.origin.y),
@@ -608,7 +608,7 @@ extension QBPopupMenu {
         ])
     }
 
-    private func bodyPathIn(rect: CGRect) -> CGPath {
+    func bodyPathIn(rect: CGRect) -> CGPath {
         return drawPath([
             .moveTo(rect.origin.x, rect.origin.y),
             .lineTo(rect.origin.x + rect.size.width, rect.origin.y),
