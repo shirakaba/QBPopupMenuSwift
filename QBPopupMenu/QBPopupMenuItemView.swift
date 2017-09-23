@@ -8,9 +8,9 @@ class QBPopupMenuItemView: UIView {
 
     weak var popupMenu: QBPopupMenu?
     let button: UIButton
-    let item: QBPopupMenuItem?
+    let item: QBPopupMenu.Item?
 
-    init(popupMenu: QBPopupMenu, item: QBPopupMenuItem? = nil) {
+    init(popupMenu: QBPopupMenu, item: QBPopupMenu.Item? = nil) {
 
         self.popupMenu = popupMenu
         self.item = item

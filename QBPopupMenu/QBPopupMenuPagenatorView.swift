@@ -29,7 +29,7 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var buttonSize = button.sizeThatFits(.zero)
-        buttonSize.width = popupMenu?.pagenatorWidth ?? 0
+        buttonSize.width = popupMenu?.config.pagenatorWidth ?? 0
         
         return buttonSize
     }

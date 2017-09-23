@@ -13,12 +13,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let items = [
-            QBPopupMenuItem(title: "Hello", action:                                     { self.action() }),
-            QBPopupMenuItem(title: "Cut", action:                                       { self.action() }),
-            QBPopupMenuItem(title: "Copy", action:                                      { self.action() }),
-            QBPopupMenuItem(title: "Delete", action:                                    { self.action() }),
-            QBPopupMenuItem(image: UIImage(named: "clip"), action:                      { self.action() }),
-            QBPopupMenuItem(title: "Delete", image: UIImage(named: "trash"), action:    { self.action() })
+            QBPopupMenu.Item(title: "Hello", action:                                     { self.action() }),
+            QBPopupMenu.Item(title: "Cut", action:                                       { self.action() }),
+            QBPopupMenu.Item(title: "Copy", action:                                      { self.action() }),
+            QBPopupMenu.Item(title: "Delete", action:                                    { self.action() }),
+            QBPopupMenu.Item(image: UIImage(named: "clip"), action:                      { self.action() }),
+            QBPopupMenu.Item(title: "Delete", image: UIImage(named: "trash"), action:    { self.action() })
         ]
         
         popupMenu = QBPopupMenu(items: items)
