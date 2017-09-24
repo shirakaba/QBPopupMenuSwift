@@ -11,13 +11,6 @@ protocol QBPopupMenuDelegate: class {
     func popupMenuDidDisappear  (menu: QBPopupMenu)
 }
 
-enum QBPopupMenuArrowDirection {
-    case up
-    case down
-    case left
-    case right
-}
-
 class QBPopupMenu: UIView {
 
     let config:                         Config
@@ -27,7 +20,7 @@ class QBPopupMenu: UIView {
     
     private var targetRect:             CGRect?
     private weak var view:              UIView?
-    private(set) var arrowDirection:    QBPopupMenuArrowDirection = .up
+    private(set) var arrowDirection:    ArrowDirection = .up
     private var page: Int               = 0
     private var arrowPoint =            CGPoint.zero
     private var overlay:                Overlay?
@@ -79,7 +72,7 @@ class QBPopupMenu: UIView {
         var maximumWidth: CGFloat = 0
         let minimumWidth: CGFloat = 40
 
-        switch (arrowDirection) {
+        switch arrowDirection {
             case .down, .up:
                 maximumWidth = view.bounds.size.width - (config.popupMenuInsets.left + config.popupMenuInsets.right)
                 if maximumWidth < minimumWidth {
@@ -138,40 +131,39 @@ class QBPopupMenu: UIView {
         var groupedItemViews = [[ItemView]]()
 
         // Create new array
-        var itemViews = [ItemView]()
+        var newGroup = [ItemView]()
         var width: CGFloat = 0
-
 
         if arrowDirection == .left || arrowDirection == .right {
             width += config.arrowSize
         }
 
-        for itemView in self.itemViews {
+        for itemView in itemViews {
             // Clear state
             resetItemViewState(itemView)
 
             let itemViewSize = itemView.sizeThatFits(.zero)
-            let isLastItem = (itemView === self.itemViews.last)
+            let isLastItem = (itemView === itemViews.last)
 
             let sizeToAdd = isLastItem ? itemViewSize.width : (itemViewSize.width + config.pagenatorWidth)
 
-            if itemViews.count > 0 && width + sizeToAdd > maximumWidth {
-                groupedItemViews.append(itemViews)
+            if newGroup.count > 0 && width + sizeToAdd > maximumWidth {
+                groupedItemViews.append(newGroup)
 
                 // Create new array
-                itemViews = [ItemView]()
+                newGroup = [ItemView]()
                 width = config.pagenatorWidth
                 if arrowDirection == .left || arrowDirection == .right {
                     width += config.arrowSize
                 }
             }
 
-            itemViews.append(itemView)
+            newGroup.append(itemView)
             width += itemViewSize.width
         }
 
-        if (itemViews.count > 0) {
-            groupedItemViews.append(itemViews)
+        if newGroup.count > 0 {
+            groupedItemViews.append(newGroup)
         }
 
         self.groupedItemViews = groupedItemViews
@@ -206,7 +198,7 @@ class QBPopupMenu: UIView {
     func dismiss(animated: Bool) {
         delegate?.popupMenuWillDisappear(menu: self)
 
-        if (animated) {
+        if animated {
             UIView.animate(withDuration: config.animationDuration,
             animations: {
                 self.alpha = 0
@@ -222,13 +214,13 @@ class QBPopupMenu: UIView {
     
     func updateVisibleItemViews() {
         // Remove all visible item views
-        while self.visibleItemViews.count > 0 {
-            self.visibleItemViews.removeFirst().removeFromSuperview()
+        while visibleItemViews.count > 0 {
+            visibleItemViews.removeFirst().removeFromSuperview()
         }
 
         // Add item views
         visibleItemViews = [ItemView]()
-        let numberOfPages = self.groupedItemViews?.count ?? 0
+        let numberOfPages = groupedItemViews?.count ?? 0
 
         assert(numberOfPages >= page)
 
@@ -259,7 +251,7 @@ class QBPopupMenu: UIView {
     func layoutVisibleItemViews() {
         var height = config.height
 
-        if self.arrowDirection == .down || self.arrowDirection == .up {
+        if arrowDirection == .down || arrowDirection == .up {
             height += config.arrowSize
         }
 
@@ -367,7 +359,7 @@ class QBPopupMenu: UIView {
         popupMenuFrame = CGRect(x: round(popupMenuFrame.origin.x), y: round(popupMenuFrame.origin.y), width: round(popupMenuFrame.size.width), height: round(popupMenuFrame.size.height))
         arrowPoint =     CGPoint(x: round(arrowPoint.x), y: round(arrowPoint.y))
 
-        self.frame = popupMenuFrame
+        frame = popupMenuFrame
     }
     
     func updatePopupMenuImage() {
@@ -521,7 +513,7 @@ class QBPopupMenu: UIView {
                 arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
             case .up:
                 arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: 0, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
-                arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), self.frame.size.width - config.cornerRadius - arrowRect.size.width)
+                arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
             case .left:
                 arrowRect = CGRect(x: 0, y: point.y - config.arrowSize + 1.0, width: config.arrowSize, height: config.arrowSize * 2.0 - 1.0)
             case .right:
@@ -683,7 +675,7 @@ extension QBPopupMenu {
             let view = super.hitTest(point, with: event)
             
             if view === self {
-                self.popupMenu?.dismiss(animated: true)
+                popupMenu?.dismiss(animated: true)
                 return nil
             }
             
@@ -713,7 +705,7 @@ extension QBPopupMenu {
             clipsToBounds = true
             
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
-            button.frame = self.bounds
+            button.frame = bounds
             button.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             button.contentMode = .scaleAspectFit
@@ -767,7 +759,7 @@ extension QBPopupMenu {
         }
         
         override func sizeToFit() {
-            self.frame.size = sizeThatFits(.zero)
+            frame.size = sizeThatFits(.zero)
         }
         
         override func sizeThatFits(_ size: CGSize) -> CGSize {
@@ -785,13 +777,13 @@ extension QBPopupMenu {
         
         let action: (()->())?
         
-        init(popupMenu: QBPopupMenu, direction: QBPopupMenuArrowDirection, action: (()->())? = nil)
+        init(popupMenu: QBPopupMenu, direction: ArrowDirection, action: (()->())? = nil)
         {
             self.action = action
             
             super.init(popupMenu: popupMenu)
             
-            let image = arrowImage(direction: direction)
+            let image = arrowImage(arrowDirection: direction)
             button.setImage(image, for: .normal)
             button.setImage(image, for: .highlighted)
         }
@@ -811,14 +803,14 @@ extension QBPopupMenu {
             return buttonSize
         }
         
-        private func arrowImage(direction: QBPopupMenuArrowDirection) -> UIImage? {
+        private func arrowImage(arrowDirection: ArrowDirection) -> UIImage? {
             
             let size = CGSize(width: 10, height: 10)
             let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
             
             UIGraphicsBeginImageContextWithOptions(size, false, 0)
             
-            fillPath(path: arrowPathIn(rect: rect, direction:direction), color: UIColor.white)
+            fillPath(path: arrowPathIn(rect: rect, arrowDirection: arrowDirection), color: UIColor.white)
             
             // Create image from buffer
             let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -827,9 +819,9 @@ extension QBPopupMenu {
             return image
         }
         
-        private func arrowPathIn(rect: CGRect, direction: QBPopupMenuArrowDirection) -> CGPath {
+        private func arrowPathIn(rect: CGRect, arrowDirection: ArrowDirection) -> CGPath {
             
-            switch (direction) {
+            switch arrowDirection {
             case .left:
                 return drawPath([
                     .moveTo(rect.origin.x + rect.size.width, rect.origin.y),
@@ -917,3 +909,12 @@ extension QBPopupMenu {
     }
 }
 
+extension QBPopupMenu {
+    
+    enum ArrowDirection {
+        case up
+        case down
+        case left
+        case right
+    }
+}

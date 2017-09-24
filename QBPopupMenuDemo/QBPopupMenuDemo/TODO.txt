@@ -5,9 +5,9 @@ swift package manager
 document
 uiview - main thread check
 weak vs strong
-delete unnecessary self.
 if (), switch ()
 member variables vs immutable?
 make config imutable
 separator width and color, text color
 remove !
+validate
