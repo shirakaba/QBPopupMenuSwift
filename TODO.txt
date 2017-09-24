@@ -11,3 +11,6 @@ make config imutable
 separator width and color, text color
 remove !
 validate
+lines ?
+plastic popup menu action
+

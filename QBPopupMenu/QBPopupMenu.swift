@@ -471,14 +471,14 @@ class QBPopupMenu: UIView {
     
    func drawArrowIn(rect: CGRect, highlighted:Bool)
     {
-        QBPopupMenu.fillPath(path: arrowPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
-
         // Separator
         if arrowDirection == .down || arrowDirection == .up {
             for itemView in visibleItemViews {
                 drawSeparatorIn(rect: CGRect(x: itemView.frame.origin.x + itemView.frame.size.width - 1, y: rect.origin.y, width: 1, height: rect.size.height))
             }
         }
+        
+        QBPopupMenu.fillPath(path: arrowPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
     }
     
     func drawHeadIn(rect: CGRect, highlighted:Bool) {
