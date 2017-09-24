@@ -108,11 +108,11 @@ class QBPopupMenu: UIView {
             alpha = 0
             overlay?.addSubview(self)
 
-            UIView.animate(withDuration: config.animationDuration, animations: {
-                self.alpha = 1.0
-            }, completion: {
+            UIView.animate(withDuration: config.animationDuration, animations: { [weak self] in
+                self?.alpha = 1.0
+            }, completion: { [weak self]
                 finished in
-                self.delegate?.popupMenuDidAppear(menu: self)
+                self.flatMap({ $0.delegate?.popupMenuDidAppear(menu: $0)})
             })
         } else {
             overlay?.addSubview(self)
@@ -200,10 +200,10 @@ class QBPopupMenu: UIView {
 
         if animated {
             UIView.animate(withDuration: config.animationDuration,
-            animations: {
-                self.alpha = 0
-            }, completion: { finished in
-                self.dismiss(animated: false)
+            animations: { [weak self] in
+                self?.alpha = 0
+            }, completion: { [weak self] finished in
+                self?.dismiss(animated: false)
             })
         } else {
             removeFromSuperview()
@@ -225,8 +225,8 @@ class QBPopupMenu: UIView {
         assert(numberOfPages >= page)
 
         if numberOfPages > 1 && page != 0 {
-            let leftPagenatorView = PagenatorView(popupMenu: self, direction: .left) {
-                self.showPreviousPage()
+            let leftPagenatorView = PagenatorView(popupMenu: self, direction: .left) { [weak self] in
+                self?.showPreviousPage()
             }
 
             addSubview(leftPagenatorView)
@@ -239,8 +239,8 @@ class QBPopupMenu: UIView {
         }
 
         if page < numberOfPages - 1 {
-            let rightPagenatorView = PagenatorView(popupMenu: self, direction: .right) {
-                self.showNextPage()
+            let rightPagenatorView = PagenatorView(popupMenu: self, direction: .right) { [weak self] in
+                self?.showNextPage()
             }
 
             addSubview(rightPagenatorView)

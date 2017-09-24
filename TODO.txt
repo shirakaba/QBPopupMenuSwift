@@ -1,16 +1,8 @@
 check memory leaks
 readme - update, check github language tags
 public/private access
-swift package manager
 document
 uiview - main thread check
 weak vs strong
-if (), switch ()
-member variables vs immutable?
-make config imutable
 separator width and color, text color
-remove !
-validate
-lines ?
-plastic popup menu action
-
+lines after dismiss?
