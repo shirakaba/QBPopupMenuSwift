@@ -31,12 +31,12 @@ class ViewController: UIViewController {
     
     @IBAction func showPopupMenu(_ sender: Any) {
         let button = sender as! UIButton
-        popupMenu.showIn(view: self.view, targetRect: button.frame, animated: true)
+        popupMenu.showIn(view: view, targetRect: button.frame, animated: true)
     }
     
     @IBAction func showPlasticPopupMenu(_ sender: Any) {
         let button = sender as! UIButton
-        plasticPopupMenu.showIn(view: self.view, targetRect: button.frame, animated: true)
+        plasticPopupMenu.showIn(view: view, targetRect: button.frame, animated: true)
     }
 }
 

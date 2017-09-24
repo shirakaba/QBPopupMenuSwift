@@ -18,93 +18,30 @@ enum QBPopupMenuArrowDirection {
     case right
 }
 
-class QBPopupMenu: UIView, QBPopupMenuDrawing {
-
-    struct Config {
-        let popupMenuInsets: UIEdgeInsets
-        let margin: CGFloat
-        let cornerRadius: CGFloat
-        let color: UIColor
-        let highlightedColor: UIColor
-        let arrowSize: CGFloat
-        let animationDuration: TimeInterval
-        let height: CGFloat
-        let pagenatorWidth: CGFloat
-        
-        init(
-            popupMenuInsets: UIEdgeInsets   = Config.standard.popupMenuInsets,
-            margin: CGFloat                 = Config.standard.margin,
-            cornerRadius: CGFloat           = Config.standard.cornerRadius,
-            color: UIColor                  = Config.standard.color,
-            highlightedColor: UIColor       = Config.standard.highlightedColor,
-            arrowSize: CGFloat              = Config.standard.arrowSize,
-            animationDuration: TimeInterval = Config.standard.animationDuration,
-            height: CGFloat                 = Config.standard.height,
-            pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth
-        ) {
-            self.popupMenuInsets = popupMenuInsets
-            self.margin = margin
-            self.cornerRadius = cornerRadius
-            self.color = color
-            self.highlightedColor = highlightedColor
-            self.arrowSize = arrowSize
-            self.animationDuration = animationDuration
-            self.height = height
-            self.pagenatorWidth = pagenatorWidth
-        }
-        
-        static var standard: Config {
-            return Config(
-                popupMenuInsets:    UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
-                margin:             2,
-                cornerRadius:       8,
-                color:              UIColor.black.withAlphaComponent(0.8),
-                highlightedColor:   UIColor.darkGray.withAlphaComponent(0.8),
-                arrowSize:          9,
-                animationDuration:  0.2,
-                height:             36,
-                pagenatorWidth:     10 + 10 * 2
-            )
-        }
-    }
-    
-    struct Item {
-        
-        let title: String?
-        let image: UIImage?
-        let action: (()->())?
-        
-        init(title: String? = nil, image: UIImage? = nil, action: (()->())? = nil) {
-            precondition(title != nil || image != nil, "Title or image needs to be set.")
-            
-            self.title = title
-            self.image = image
-            self.action = action
-        }
-    }
+class QBPopupMenu: UIView {
 
     let config:                         Config
-    private var itemViews:              [QBPopupMenuItemView]
-    private var groupedItemViews:       [[QBPopupMenuItemView]]?
-    private var visibleItemViews =      [QBPopupMenuItemView]()
+    private var itemViews:              [ItemView]
+    private var groupedItemViews:       [[ItemView]]?
+    private var visibleItemViews =      [ItemView]()
     
     private var targetRect:             CGRect?
     private weak var view:              UIView?
     private(set) var arrowDirection:    QBPopupMenuArrowDirection = .up
     private var page: Int               = 0
     private var arrowPoint =            CGPoint.zero
-    private var overlayView:            QBPopupMenuOverlayView?
+    private var overlay:                Overlay?
 
     weak var  delegate:                 QBPopupMenuDelegate?
 
     init(config: Config = Config.standard, items: [QBPopupMenu.Item]) {
         self.config = config
-        itemViews = [QBPopupMenuItemView]()
+        itemViews = [ItemView]()
         
         super.init(frame: .zero)
 
         for item in items {
-            itemViews.append(QBPopupMenuItemView(popupMenu: self, item: item))
+            itemViews.append(ItemView(popupMenu: self, item: item))
         }
 
         isOpaque = false
@@ -161,22 +98,22 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         showPage(0)
 
         // fix fast show/hide popupMenu and show 1+ overlayViews
-        overlayView?.removeFromSuperview()
+        overlay?.removeFromSuperview()
 
         // Create overlay view
-        overlayView = QBPopupMenuOverlayView(frame: view.bounds, popupMenu: self)
+        overlay = Overlay(frame: view.bounds, popupMenu: self)
 
         // Delegate
         delegate?.popupMenuWillAppear(menu: self)
 
         // Show
-        if let overlayView = overlayView {
-            view.addSubview(overlayView)
+        if let overlay = overlay {
+            view.addSubview(overlay)
         }
 
         if animated {
             alpha = 0
-            overlayView?.addSubview(self)
+            overlay?.addSubview(self)
 
             UIView.animate(withDuration: config.animationDuration, animations: {
                 self.alpha = 1.0
@@ -185,23 +122,23 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
                 self.delegate?.popupMenuDidAppear(menu: self)
             })
         } else {
-            overlayView?.addSubview(self)
+            overlay?.addSubview(self)
             delegate?.popupMenuDidAppear(menu: self)
         }
     }
     
     func update(targetRect: CGRect) {
-        self.targetRect = targetRect;
+        self.targetRect = targetRect
     
         updatePopupMenuFrameAndArrowPosition()
         updatePopupMenuImage()
     }
     
     func groupItemViewsWithMaximumWidth(_ maximumWidth: CGFloat) {
-        var groupedItemViews = [[QBPopupMenuItemView]]()
+        var groupedItemViews = [[ItemView]]()
 
         // Create new array
-        var itemViews = [QBPopupMenuItemView]()
+        var itemViews = [ItemView]()
         var width: CGFloat = 0
 
 
@@ -222,7 +159,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
                 groupedItemViews.append(itemViews)
 
                 // Create new array
-                itemViews = [QBPopupMenuItemView]()
+                itemViews = [ItemView]()
                 width = config.pagenatorWidth
                 if arrowDirection == .left || arrowDirection == .right {
                     width += config.arrowSize
@@ -240,7 +177,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         self.groupedItemViews = groupedItemViews
     }
     
-    func resetItemViewState(_ itemView: QBPopupMenuItemView)
+    private func resetItemViewState(_ itemView: ItemView)
     {
         // NOTE: Reset properties related to the size of the button before colling sizeThatFits: of item view,
         //       or the size of the view will change from the second time.
@@ -278,7 +215,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
             })
         } else {
             removeFromSuperview()
-            overlayView?.removeFromSuperview()
+            overlay?.removeFromSuperview()
             delegate?.popupMenuDidDisappear(menu: self)
         }
     }
@@ -290,13 +227,13 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
 
         // Add item views
-        visibleItemViews = [QBPopupMenuItemView]()
+        visibleItemViews = [ItemView]()
         let numberOfPages = self.groupedItemViews?.count ?? 0
 
         assert(numberOfPages >= page)
 
         if numberOfPages > 1 && page != 0 {
-            let leftPagenatorView = QBPopupMenuPagenatorView(popupMenu: self, direction: .left) {
+            let leftPagenatorView = PagenatorView(popupMenu: self, direction: .left) {
                 self.showPreviousPage()
             }
 
@@ -310,7 +247,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
 
         if page < numberOfPages - 1 {
-            let rightPagenatorView = QBPopupMenuPagenatorView(popupMenu: self, direction: .right) {
+            let rightPagenatorView = PagenatorView(popupMenu: self, direction: .right) {
                 self.showNextPage()
             }
 
@@ -542,7 +479,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
     
    func drawArrowIn(rect: CGRect, highlighted:Bool)
     {
-        fillPath(path: arrowPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
+        QBPopupMenu.fillPath(path: arrowPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
 
         // Separator
         if arrowDirection == .down || arrowDirection == .up {
@@ -553,15 +490,15 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
     }
     
     func drawHeadIn(rect: CGRect, highlighted:Bool) {
-        fillPath(path: headPathIn(rect: rect, cornerRadius: config.cornerRadius), color: (highlighted ? config.highlightedColor : config.color))
+        QBPopupMenu.fillPath(path: headPathIn(rect: rect, cornerRadius: config.cornerRadius), color: (highlighted ? config.highlightedColor : config.color))
     }
     
     func drawTailIn(rect: CGRect, highlighted:Bool) {
-        fillPath(path: tailPathIn(rect: rect, cornerRadius: config.cornerRadius), color: (highlighted ? config.highlightedColor : config.color))
+        QBPopupMenu.fillPath(path: tailPathIn(rect: rect, cornerRadius: config.cornerRadius), color: (highlighted ? config.highlightedColor : config.color))
     }
 
     func drawBodyIn(rect: CGRect, firstItem: Bool, lastItem: Bool, highlighted: Bool) {
-        fillPath(path: bodyPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
+        QBPopupMenu.fillPath(path: bodyPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
 
         // Separator
         if !lastItem {
@@ -570,7 +507,7 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
     }
 
     func drawSeparatorIn(rect: CGRect) {
-        withCGContext() { context in
+        QBPopupMenu.withCGContext() { context in
             context.clear(rect)
         }
     }
@@ -600,25 +537,25 @@ extension QBPopupMenu {
     func arrowPathIn(rect: CGRect) -> CGPath {
         switch arrowDirection {
             case .down:
-                return drawPath([
+                return QBPopupMenu.drawPath([
                     .moveTo(rect.origin.x, rect.origin.y),
                     .lineTo(rect.origin.x + rect.size.width, rect.origin.y),
                     .lineTo(rect.origin.x + rect.size.width / 2.0, rect.origin.y + rect.size.height)
                  ])
             case .up:
-                return drawPath([
+                return QBPopupMenu.drawPath([
                     .moveTo(rect.origin.x, rect.origin.y + rect.size.height),
                     .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height),
                     .lineTo(rect.origin.x + rect.size.width / 2.0, rect.origin.y)
                 ])
             case .left:
-                return drawPath([
+                return QBPopupMenu.drawPath([
                     .moveTo(rect.origin.x + rect.size.width, rect.origin.y),
                     .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height),
                     .lineTo(rect.origin.x, rect.origin.y + rect.size.height / 2.0)
                     ])
             case .right:
-                return drawPath([
+                return QBPopupMenu.drawPath([
                     .moveTo(rect.origin.x, rect.origin.y),
                     .lineTo(rect.origin.x, rect.origin.y + rect.size.height),
                     .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height / 2.0)
@@ -627,7 +564,7 @@ extension QBPopupMenu {
     }
 
     func headPathIn(rect: CGRect, cornerRadius: CGFloat) -> CGPath {
-        return drawPath([
+        return QBPopupMenu.drawPath([
                 .moveTo(rect.origin.x, rect.origin.y + cornerRadius),
                 .arcTo (rect.origin.x, rect.origin.y, rect.origin.x + cornerRadius, rect.origin.y, cornerRadius),
                 .lineTo(rect.origin.x + rect.size.width, rect.origin.y),
@@ -638,7 +575,7 @@ extension QBPopupMenu {
      }
     
     func tailPathIn(rect:CGRect, cornerRadius: CGFloat) -> CGPath {
-        return drawPath([
+        return QBPopupMenu.drawPath([
             .moveTo(rect.origin.x, rect.origin.y),
             .lineTo(rect.origin.x + rect.size.width - cornerRadius, rect.origin.y),
             .arcTo (rect.origin.x + rect.size.width, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + cornerRadius, cornerRadius),
@@ -649,7 +586,7 @@ extension QBPopupMenu {
     }
 
     func bodyPathIn(rect: CGRect) -> CGPath {
-        return drawPath([
+        return QBPopupMenu.drawPath([
             .moveTo(rect.origin.x, rect.origin.y),
             .lineTo(rect.origin.x + rect.size.width, rect.origin.y),
             .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height),
@@ -657,3 +594,326 @@ extension QBPopupMenu {
         ])
      }
 }
+
+extension QBPopupMenu {
+    
+    struct Config {
+        let popupMenuInsets: UIEdgeInsets
+        let margin: CGFloat
+        let cornerRadius: CGFloat
+        let color: UIColor
+        let highlightedColor: UIColor
+        let arrowSize: CGFloat
+        let animationDuration: TimeInterval
+        let height: CGFloat
+        let pagenatorWidth: CGFloat
+        
+        init(
+            popupMenuInsets: UIEdgeInsets   = Config.standard.popupMenuInsets,
+            margin: CGFloat                 = Config.standard.margin,
+            cornerRadius: CGFloat           = Config.standard.cornerRadius,
+            color: UIColor                  = Config.standard.color,
+            highlightedColor: UIColor       = Config.standard.highlightedColor,
+            arrowSize: CGFloat              = Config.standard.arrowSize,
+            animationDuration: TimeInterval = Config.standard.animationDuration,
+            height: CGFloat                 = Config.standard.height,
+            pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth
+            ) {
+            self.popupMenuInsets = popupMenuInsets
+            self.margin = margin
+            self.cornerRadius = cornerRadius
+            self.color = color
+            self.highlightedColor = highlightedColor
+            self.arrowSize = arrowSize
+            self.animationDuration = animationDuration
+            self.height = height
+            self.pagenatorWidth = pagenatorWidth
+        }
+        
+        static var standard: Config {
+            return Config(
+                popupMenuInsets:    UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
+                margin:             2,
+                cornerRadius:       8,
+                color:              UIColor.black.withAlphaComponent(0.8),
+                highlightedColor:   UIColor.darkGray.withAlphaComponent(0.8),
+                arrowSize:          9,
+                animationDuration:  0.2,
+                height:             36,
+                pagenatorWidth:     10 + 10 * 2
+            )
+        }
+    }
+}
+
+extension QBPopupMenu {
+    struct Item {
+        let title: String?
+        let image: UIImage?
+        let action: (()->())?
+        
+        init(title: String? = nil, image: UIImage? = nil, action: (()->())? = nil) {
+            precondition(title != nil || image != nil, "Title or image needs to be set.")
+            
+            self.title = title
+            self.image = image
+            self.action = action
+        }
+    }
+}
+
+extension QBPopupMenu {
+    
+    private class Overlay: UIView
+    {
+        
+        private(set) weak var popupMenu: QBPopupMenu?
+        
+        init(frame: CGRect, popupMenu: QBPopupMenu) {
+            self.popupMenu = popupMenu
+            super.init(frame: frame)
+            backgroundColor = UIColor.clear
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) can not be used.")
+        }
+        
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            let view = super.hitTest(point, with: event)
+            
+            if view === self {
+                self.popupMenu?.dismiss(animated: true)
+                return nil
+            }
+            
+            return view
+        }
+    }
+}
+
+extension QBPopupMenu {
+    
+    private class ItemView: UIView {
+        
+        weak var popupMenu: QBPopupMenu?
+        let button: UIButton
+        let item: QBPopupMenu.Item?
+        
+        init(popupMenu: QBPopupMenu, item: QBPopupMenu.Item? = nil) {
+            
+            self.popupMenu = popupMenu
+            self.item = item
+            self.button = UIButton(type: .custom)
+            
+            super.init(frame: .zero)
+            
+            isOpaque = false
+            backgroundColor = UIColor.clear
+            clipsToBounds = true
+            
+            button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
+            button.frame = self.bounds
+            button.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            button.contentMode = .scaleAspectFit
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+            button.imageView?.contentMode = .scaleAspectFit
+            button.setTitleColor(UIColor.white, for: .normal)
+            button.setTitleColor(UIColor.white, for: .highlighted)
+            
+            button.setTitle(item?.title, for: .normal)
+            button.setImage(item?.image, for: .normal)
+            button.setImage(item?.image, for: .highlighted)
+            
+            if item?.title != nil && item?.image != nil {
+                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+            } else {
+                button.titleEdgeInsets = .zero
+                button.imageEdgeInsets = .zero
+            }
+            
+            addSubview(button)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) can not be used.")
+        }
+        
+        @objc func performAction() {
+            item?.action?()
+            popupMenu?.dismiss(animated: true)
+        }
+        
+        var image: UIImage? {
+            get {
+                return button.backgroundImage(for: .normal)
+            }
+            
+            set(newImage) {
+                button.setBackgroundImage(newImage, for: .normal)
+            }
+        }
+        
+        var highlightedImage: UIImage? {
+            get {
+                return button.backgroundImage(for: .highlighted)
+            }
+            
+            set(newImage) {
+                button.setBackgroundImage(newImage, for: .highlighted)
+            }
+        }
+        
+        override func sizeToFit() {
+            self.frame.size = sizeThatFits(.zero)
+        }
+        
+        override func sizeThatFits(_ size: CGSize) -> CGSize {
+            var buttonSize = button.sizeThatFits(.zero)
+            buttonSize.width += 10 * 2
+            
+            return buttonSize
+        }
+    }
+}
+
+extension QBPopupMenu {
+    
+    private class PagenatorView: ItemView {
+        
+        let action: (()->())?
+        
+        init(popupMenu: QBPopupMenu, direction: QBPopupMenuArrowDirection, action: (()->())? = nil)
+        {
+            self.action = action
+            
+            super.init(popupMenu: popupMenu)
+            
+            let image = arrowImage(direction: direction)
+            button.setImage(image, for: .normal)
+            button.setImage(image, for: .highlighted)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) can not be used.")
+        }
+        
+        override func performAction() {
+            action?()
+        }
+        
+        override func sizeThatFits(_ size: CGSize) -> CGSize {
+            var buttonSize = button.sizeThatFits(.zero)
+            buttonSize.width = popupMenu?.config.pagenatorWidth ?? 0
+            
+            return buttonSize
+        }
+        
+        private func arrowImage(direction: QBPopupMenuArrowDirection) -> UIImage? {
+            
+            let size = CGSize(width: 10, height: 10)
+            let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            
+            UIGraphicsBeginImageContextWithOptions(size, false, 0)
+            
+            fillPath(path: arrowPathIn(rect: rect, direction:direction), color: UIColor.white)
+            
+            // Create image from buffer
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            return image
+        }
+        
+        private func arrowPathIn(rect: CGRect, direction: QBPopupMenuArrowDirection) -> CGPath {
+            
+            switch (direction) {
+            case .left:
+                return drawPath([
+                    .moveTo(rect.origin.x + rect.size.width, rect.origin.y),
+                    .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height),
+                    .lineTo(rect.origin.x, rect.origin.y + rect.size.height / 2.0)
+                    ])
+                
+            case .right:
+                return drawPath([
+                    .moveTo(rect.origin.x, rect.origin.y),
+                    .lineTo(rect.origin.x, rect.origin.y + rect.size.height),
+                    .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height / 2.0)
+                    ])
+                
+            default:
+                assertionFailure( "Pagenator arrow direction can only be left or right.")
+                return CGMutablePath()
+            }
+        }
+    }
+    
+}
+
+extension QBPopupMenu {
+
+    enum DrawingSegment {
+        case moveTo(CGFloat, CGFloat)
+        case lineTo(CGFloat, CGFloat)
+        case arcTo(CGFloat, CGFloat, CGFloat, CGFloat, CGFloat)
+    }
+
+    static func drawPath(_ segments: [DrawingSegment]) -> CGPath {
+        let path = CGMutablePath()
+        
+        for segment in segments {
+            switch segment {
+            case .moveTo(let x, let y):
+                path.move(to: CGPoint(x: x, y: y))
+            case .lineTo(let x, let y):
+                path.addLine(to: CGPoint(x: x, y: y))
+            case .arcTo(let x1, let y1, let x2, let y2, let radius):
+                path.addArc(tangent1End: CGPoint(x: x1, y: y1), tangent2End: CGPoint(x: x2, y: y2), radius: radius)
+            }
+        }
+        
+        path.closeSubpath()
+        return path
+    }
+    
+    static func drawRect(_ rect: CGRect) -> CGPath {
+        let path = CGMutablePath()
+        path.addRect(rect)
+        return path
+    }
+    
+    static func fillPath(path: CGPath, color: UIColor) {
+        withCGContext() { context in
+            context.addPath(path)
+            context.setFillColor(color.cgColor)
+            context.fillPath()
+        }
+    }
+    
+    static func withCGContext(body: ((CGContext) -> ())) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        
+        context.saveGState()
+        body(context)
+        context.restoreGState()
+    }
+    
+    static func fillGradient(path: CGPath, startPoint: CGPoint, endPoint: CGPoint, gradienComponents: [CGFloat], gradientLocations: [CGFloat]? = nil) {
+        precondition((gradienComponents.count % 4) == 0, "Gradient componets is set of RGBA values and must be dividable by 4.")
+        precondition((gradientLocations.flatMap({ $0.count * 4 }) ?? gradienComponents.count) == gradienComponents.count, "Invalid number of gradient locations. Needs to match gradientComponents count.")
+        
+        withCGContext() { context in
+            context.addPath(path)
+            context.clip()
+            
+            guard let gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: gradienComponents, locations: gradientLocations, count: gradienComponents.count / 4) else {
+                preconditionFailure("Gradient not created!")
+            }
+            context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: .drawsAfterEndLocation)
+        }
+    }
+}
+

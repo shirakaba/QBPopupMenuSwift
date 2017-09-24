@@ -1,16 +1,9 @@
-
-Rewrite all to swift, including main
-Remove occurences of NSObject, @objc
-Use structures and Swift syntax, default parameters, varargs, enums
 check memory leaks
 readme - update, check github language tags
 public/private access
-remove all ";"
 swift package manager
 document
 uiview - main thread check
-remove all @objc, selectors, nsobject etc
-static methods
 weak vs strong
 delete unnecessary self.
 if (), switch ()
