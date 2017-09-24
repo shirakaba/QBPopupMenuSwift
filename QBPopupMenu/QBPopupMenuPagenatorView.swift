@@ -41,18 +41,8 @@ class QBPopupMenuPagenatorView: QBPopupMenuItemView, QBPopupMenuDrawing {
 
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        
-        context.saveGState()
+        fillPath(path: arrowPathIn(rect: rect, direction:direction), color: UIColor.white)
 
-        context.addPath(arrowPathIn(rect: rect, direction:direction))
-        context.setFillColor(UIColor.white.cgColor)
-        context.fillPath()
-        
-        context.restoreGState()
-        
         // Create image from buffer
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

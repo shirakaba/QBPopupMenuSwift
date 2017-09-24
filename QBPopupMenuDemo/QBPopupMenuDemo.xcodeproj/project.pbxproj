@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */; };
 		AA7FA185184321600044F5D7 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA7FA183184321600044F5D7 /* background.jpg */; };
 		AAD226E5183F91C300C27616 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E4183F91C300C27616 /* Foundation.framework */; };
 		AAD226E7183F91C300C27616 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD226E6183F91C300C27616 /* CoreGraphics.framework */; };
@@ -26,7 +25,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBPlasticPopupMenu.m; sourceTree = "<group>"; };
 		AA7FA183184321600044F5D7 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		AAD226E1183F91C300C27616 /* QBPopupMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QBPopupMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD226E4183F91C300C27616 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,7 +61,6 @@
 		AA7C7DA1184C791F00CF859B /* QBPopupMenu */ = {
 			isa = PBXGroup;
 			children = (
-				AA7C7DA3184C791F00CF859B /* QBPlasticPopupMenu.m */,
 				F9EC7D031F632AA100C3B165 /* QBPlasticPopupMenu.swift */,
 				F9EC7D051F63300200C3B165 /* QBPopupMenu.swift */,
 				F9F730891F6424540030C68D /* QBPopupMenuDrawing.swift */,
@@ -213,7 +210,6 @@
 				F9F7308A1F6424540030C68D /* QBPopupMenuDrawing.swift in Sources */,
 				F9EC7D041F632AA100C3B165 /* QBPlasticPopupMenu.swift in Sources */,
 				F9EC7D061F63300200C3B165 /* QBPopupMenu.swift in Sources */,
-				AA7C7DAE184C791F00CF859B /* QBPlasticPopupMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

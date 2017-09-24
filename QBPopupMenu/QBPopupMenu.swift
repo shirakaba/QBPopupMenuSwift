@@ -61,25 +61,25 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         }
     }
 
-    let config: Config
-    private var itemViews: [QBPopupMenuItemView]!
-    private var groupedItemViews: [[QBPopupMenuItemView]]?
-    private var visibleItemViews = [QBPopupMenuItemView]()
+    let config:                         Config
+    private var itemViews:              [QBPopupMenuItemView]
+    private var groupedItemViews:       [[QBPopupMenuItemView]]?
+    private var visibleItemViews =      [QBPopupMenuItemView]()
     
-    private var targetRect: CGRect?
-    private weak var view: UIView?
-    private var arrowDirection: QBPopupMenuArrowDirection = .up
-    private var page: Int                                 = 0
-    private var arrowPoint = CGPoint.zero
-    private var overlayView: QBPopupMenuOverlayView?
+    private var targetRect:             CGRect?
+    private weak var view:              UIView?
+    private(set) var arrowDirection:    QBPopupMenuArrowDirection = .up
+    private var page: Int               = 0
+    private var arrowPoint =            CGPoint.zero
+    private var overlayView:            QBPopupMenuOverlayView?
 
-    weak var  delegate: QBPopupMenuDelegate?
+    weak var  delegate:                 QBPopupMenuDelegate?
 
     init(config: Config = Config.standard, items: [QBPopupMenu.Item]) {
         self.config = config
-        super.init(frame: .zero)
-
         itemViews = [QBPopupMenuItemView]()
+        
+        super.init(frame: .zero)
 
         for item in items {
             itemViews.append(QBPopupMenuItemView(popupMenu: self, item: item))
@@ -518,19 +518,9 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         return image
     }
     
-    func drawPath(path: CGPath, highlighted:Bool) {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-
-        context.saveGState()
-        context.addPath(path)
-        context.setFillColor((highlighted ? config.highlightedColor : config.color).cgColor)
-        context.fillPath()
-        context.restoreGState()
-    }
-    
    func drawArrowIn(rect: CGRect, highlighted:Bool)
     {
-        drawPath(path: arrowPathIn(rect: rect), highlighted: highlighted)
+        fillPath(path: arrowPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
 
         // Separator
         if arrowDirection == .down || arrowDirection == .up {
@@ -541,15 +531,15 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
     }
     
     func drawHeadIn(rect: CGRect, highlighted:Bool) {
-        drawPath(path: headPathIn(rect: rect), highlighted: highlighted)
+        fillPath(path: headPathIn(rect: rect, cornerRadius: config.cornerRadius), color: (highlighted ? config.highlightedColor : config.color))
     }
     
     func drawTailIn(rect: CGRect, highlighted:Bool) {
-        drawPath(path: tailPathIn(rect: rect), highlighted: highlighted)
+        fillPath(path: tailPathIn(rect: rect, cornerRadius: config.cornerRadius), color: (highlighted ? config.highlightedColor : config.color))
     }
 
     func drawBodyIn(rect: CGRect, firstItem: Bool, lastItem: Bool, highlighted: Bool) {
-        drawPath(path: bodyPathIn(rect: rect), highlighted: highlighted)
+        fillPath(path: bodyPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
 
         // Separator
         if !lastItem {
@@ -619,24 +609,24 @@ extension QBPopupMenu {
         }
     }
 
-    func headPathIn(rect: CGRect) -> CGPath {
+    func headPathIn(rect: CGRect, cornerRadius: CGFloat) -> CGPath {
         return drawPath([
-                .moveTo(rect.origin.x, rect.origin.y + config.cornerRadius),
-                .arcTo (rect.origin.x, rect.origin.y, rect.origin.x + config.cornerRadius, rect.origin.y, config.cornerRadius),
+                .moveTo(rect.origin.x, rect.origin.y + cornerRadius),
+                .arcTo (rect.origin.x, rect.origin.y, rect.origin.x + cornerRadius, rect.origin.y, cornerRadius),
                 .lineTo(rect.origin.x + rect.size.width, rect.origin.y),
                 .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height),
-                .lineTo(rect.origin.x + config.cornerRadius, rect.origin.y + rect.size.height),
-                .arcTo (rect.origin.x, rect.origin.y + rect.size.height, rect.origin.x, rect.origin.y + rect.size.height - config.cornerRadius, config.cornerRadius),
+                .lineTo(rect.origin.x + cornerRadius, rect.origin.y + rect.size.height),
+                .arcTo (rect.origin.x, rect.origin.y + rect.size.height, rect.origin.x, rect.origin.y + rect.size.height - cornerRadius, cornerRadius),
          ])
      }
     
-    func tailPathIn(rect:CGRect) -> CGPath {
+    func tailPathIn(rect:CGRect, cornerRadius: CGFloat) -> CGPath {
         return drawPath([
             .moveTo(rect.origin.x, rect.origin.y),
-            .lineTo(rect.origin.x + rect.size.width - config.cornerRadius, rect.origin.y),
-            .arcTo (rect.origin.x + rect.size.width, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + config.cornerRadius, config.cornerRadius),
-            .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height - config.cornerRadius),
-            .arcTo (rect.origin.x + rect.size.width, rect.origin.y + rect.size.height, rect.origin.x + rect.size.width - config.cornerRadius, rect.origin.y + rect.size.height, config.cornerRadius),
+            .lineTo(rect.origin.x + rect.size.width - cornerRadius, rect.origin.y),
+            .arcTo (rect.origin.x + rect.size.width, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + cornerRadius, cornerRadius),
+            .lineTo(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height - cornerRadius),
+            .arcTo (rect.origin.x + rect.size.width, rect.origin.y + rect.size.height, rect.origin.x + rect.size.width - cornerRadius, rect.origin.y + rect.size.height, cornerRadius),
             .lineTo(rect.origin.x, rect.origin.y + rect.size.height),
         ])
     }

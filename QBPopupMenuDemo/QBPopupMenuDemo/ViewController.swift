@@ -7,7 +7,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var popupMenu: QBPopupMenu!
-    //@property (nonatomic, strong) QBPlasticPopupMenu *plasticPopupMenu;
+    var plasticPopupMenu: QBPopupMenu!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +22,8 @@ class ViewController: UIViewController {
         ]
         
         popupMenu = QBPopupMenu(items: items)
-        
-        //    QBPlasticPopupMenu *plasticPopupMenu = [[QBPlasticPopupMenu alloc] initWithItems:items];
+        plasticPopupMenu = QBPlasticPopupMenu(items: items)
         //    plasticPopupMenu.height = 40;
-        //    self.plasticPopupMenu = plasticPopupMenu;
     }
     
     func action() {
@@ -39,7 +37,7 @@ class ViewController: UIViewController {
     
     @IBAction func showPlasticPopupMenu(_ sender: Any) {
         let button = sender as! UIButton
-        //[self.plasticPopupMenu showInView:self.view targetRect:button.frame animated:YES];
+        plasticPopupMenu.showIn(view: self.view, targetRect: button.frame, animated: true)
     }
 }
 

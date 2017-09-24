@@ -13,9 +13,7 @@ enum QBPopupMenuDrawingSegment {
     case arcTo(CGFloat, CGFloat, CGFloat, CGFloat, CGFloat)
 }
 
-protocol QBPopupMenuDrawing {
-    func drawPath(_ segments: [QBPopupMenuDrawingSegment]) -> CGPath
-}
+protocol QBPopupMenuDrawing {}
 
 extension QBPopupMenuDrawing {
     
@@ -35,5 +33,32 @@ extension QBPopupMenuDrawing {
         
         path.closeSubpath()
         return path
+    }
+    
+    func fillPath(path: CGPath, color: UIColor) {
+        withCGContext() { context in
+            context.addPath(path)
+            context.setFillColor(color.cgColor)
+            context.fillPath()
+        }
+    }
+    
+    func withCGContext(body: ((CGContext) -> ())) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+
+        context.saveGState()
+        body(context)
+        context.restoreGState()
+    }
+    
+    func fillGradient(path: CGPath, startPoint: CGPoint, endPoint: CGPoint, gradienComponents: [CGFloat], gradientLocations: [CGFloat]? = nil) {
+        withCGContext() { context in
+            context.addPath(path)
+            context.clip()
+            if let gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: gradienComponents, locations: gradientLocations, count: gradientLocations?.count ?? 0) {
+               
+                context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: .drawsAfterEndLocation)
+            }
+        }
     }
 }

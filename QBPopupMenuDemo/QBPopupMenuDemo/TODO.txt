@@ -17,3 +17,4 @@ if (), switch ()
 member variables vs immutable?
 make config imutable
 separator width and color, text color
+remove !
