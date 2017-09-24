@@ -19,7 +19,7 @@ extension QBPopupMenuDrawing {
     
     func drawPath(_ segments: [QBPopupMenuDrawingSegment]) -> CGPath {
         let path = CGMutablePath()
-        
+    
         for segment in segments {
             switch segment {
             case .moveTo(let x, let y):
@@ -32,6 +32,12 @@ extension QBPopupMenuDrawing {
         }
         
         path.closeSubpath()
+        return path
+    }
+    
+    func drawRect(_ rect: CGRect) -> CGPath {
+        let path = CGMutablePath()
+        path.addRect(rect)
         return path
     }
     
@@ -52,13 +58,17 @@ extension QBPopupMenuDrawing {
     }
     
     func fillGradient(path: CGPath, startPoint: CGPoint, endPoint: CGPoint, gradienComponents: [CGFloat], gradientLocations: [CGFloat]? = nil) {
+        precondition((gradienComponents.count % 4) == 0, "Gradient componets is set of RGBA values and must be dividable by 4.")
+        precondition((gradientLocations.flatMap({ $0.count * 4 }) ?? gradienComponents.count) == gradienComponents.count, "Invalid number of gradient locations. Needs to match gradientComponents count.")
+        
         withCGContext() { context in
             context.addPath(path)
             context.clip()
-            if let gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: gradienComponents, locations: gradientLocations, count: gradientLocations?.count ?? 0) {
-               
-                context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: .drawsAfterEndLocation)
+            
+            guard let gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: gradienComponents, locations: gradientLocations, count: gradienComponents.count / 4) else {
+                preconditionFailure("Gradient not created!")
             }
+            context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: .drawsAfterEndLocation)
         }
     }
 }

@@ -31,6 +31,28 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
         let height: CGFloat
         let pagenatorWidth: CGFloat
         
+        init(
+            popupMenuInsets: UIEdgeInsets   = Config.standard.popupMenuInsets,
+            margin: CGFloat                 = Config.standard.margin,
+            cornerRadius: CGFloat           = Config.standard.cornerRadius,
+            color: UIColor                  = Config.standard.color,
+            highlightedColor: UIColor       = Config.standard.highlightedColor,
+            arrowSize: CGFloat              = Config.standard.arrowSize,
+            animationDuration: TimeInterval = Config.standard.animationDuration,
+            height: CGFloat                 = Config.standard.height,
+            pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth
+        ) {
+            self.popupMenuInsets = popupMenuInsets
+            self.margin = margin
+            self.cornerRadius = cornerRadius
+            self.color = color
+            self.highlightedColor = highlightedColor
+            self.arrowSize = arrowSize
+            self.animationDuration = animationDuration
+            self.height = height
+            self.pagenatorWidth = pagenatorWidth
+        }
+        
         static var standard: Config {
             return Config(
                 popupMenuInsets:    UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
@@ -548,15 +570,10 @@ class QBPopupMenu: UIView, QBPopupMenuDrawing {
     }
 
     func drawSeparatorIn(rect: CGRect) {
-            guard let context = UIGraphicsGetCurrentContext() else {
-                return
-            }
-
-            // Separator
-            context.saveGState()
+        withCGContext() { context in
             context.clear(rect)
-            context.restoreGState()
         }
+    }
     
     func drawArrowAt(point: CGPoint, highlighted: Bool) {
         var arrowRect = CGRect.zero
