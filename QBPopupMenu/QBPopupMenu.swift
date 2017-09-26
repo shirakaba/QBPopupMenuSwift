@@ -11,7 +11,7 @@ public protocol QBPopupMenuDelegate: class {
     func popupMenuDidDisappear  (menu: QBPopupMenu)
 }
 
-public class QBPopupMenu: UIView {
+public class QBPopupMenu {
 
     //GUI config
     let config:                         Config
@@ -46,23 +46,21 @@ public class QBPopupMenu: UIView {
     //menu delegate
     private weak var  delegate:         QBPopupMenuDelegate?
 
+    //popup menu view
+    private let view:                   UIView
+    
     public init(config: Config = Config.standard, items: [QBPopupMenu.Item]) {
         self.config = config
         self.items = [ItemView]()
-        
-        super.init(frame: .zero)
+        self.view = UIView(frame: .zero)
 
         for item in items {
             self.items.append(ItemView(popupMenu: self, item: item))
         }
 
-        isOpaque = false
-        backgroundColor = UIColor.clear
-        clipsToBounds = true
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) can not be used.")
+        view.isOpaque = false
+        view.backgroundColor = UIColor.clear
+        view.clipsToBounds = true
     }
 
     public func showIn(parentView: UIView, targetRect: CGRect, animated: Bool) {
@@ -124,17 +122,17 @@ public class QBPopupMenu: UIView {
         }
 
         if animated {
-            alpha = 0
-            overlay?.addSubview(self)
+            view.alpha = 0
+            overlay?.addSubview(view)
 
             UIView.animate(withDuration: config.animationDuration, animations: { [weak self] in
-                self?.alpha = 1.0
+                self?.view.alpha = 1.0
             }, completion: { [weak self]
                 finished in
                 self.flatMap({ $0.delegate?.popupMenuDidAppear(menu: $0)})
             })
         } else {
-            overlay?.addSubview(self)
+            overlay?.addSubview(view)
             delegate?.popupMenuDidAppear(menu: self)
         }
     }
@@ -220,14 +218,15 @@ public class QBPopupMenu: UIView {
         if animated {
             UIView.animate(withDuration: config.animationDuration,
             animations: { [weak self] in
-                self?.alpha = 0
+                self?.view.alpha = 0
             }, completion: { [weak self] finished in
                 self?.dismiss(animated: false)
             })
         } else {
-            removeFromSuperview()
-            overlay?.removeFromSuperview()
+            view.removeFromSuperview()
             delegate?.popupMenuDidDisappear(menu: self)
+            overlay?.dismiss()
+            overlay = nil
         }
     }
     
@@ -248,12 +247,12 @@ public class QBPopupMenu: UIView {
                 self?.showPreviousPage()
             }
 
-            addSubview(leftPagenatorView)
+            view.addSubview(leftPagenatorView)
             visibleItems.append(leftPagenatorView)
         }
 
         for itemView in groupedItems?[page] ?? [] {
-            addSubview(itemView)
+            view.addSubview(itemView)
             visibleItems.append(itemView)
         }
 
@@ -262,7 +261,7 @@ public class QBPopupMenu: UIView {
                 self?.showNextPage()
             }
 
-            addSubview(rightPagenatorView)
+            view.addSubview(rightPagenatorView)
             visibleItems.append(rightPagenatorView)
         }
     }
@@ -374,7 +373,7 @@ public class QBPopupMenu: UIView {
                 arrowPoint = CGPoint(x: popupMenuFrame.size.width, y: max(config.cornerRadius, min(popupMenuFrame.size.height - config.cornerRadius, centerOfTargetRect - popupMenuFrame.origin.y)))
         }
 
-        frame = popupMenuFrame
+        view.frame = popupMenuFrame
     }
     
     private func updatePopupMenuImage() {
@@ -406,7 +405,7 @@ public class QBPopupMenu: UIView {
     
     private func popupMenuImage(highlighted: Bool) -> UIImage? {
 
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0)
 
         // Draw body
         let y = (arrowDirection == .up) ? config.arrowSize : 0
@@ -515,10 +514,10 @@ public class QBPopupMenu: UIView {
         switch arrowDirection {
         case .down:
             arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: point.y - config.arrowSize, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
-            arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
+            arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), view.frame.size.width - config.cornerRadius - arrowRect.size.width)
         case .up:
             arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: 0, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
-            arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
+            arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), view.frame.size.width - config.cornerRadius - arrowRect.size.width)
         case .left:
             arrowRect = CGRect(x: 0, y: point.y - config.arrowSize + 1.0, width: config.arrowSize, height: config.arrowSize * 2.0 - 1.0)
         case .right:
@@ -693,7 +692,7 @@ extension QBPopupMenu {
     private class Overlay: UIView
     {
         
-        private(set) weak var popupMenu: QBPopupMenu?
+        private(set) var popupMenu: QBPopupMenu?
         
         init(frame: CGRect, popupMenu: QBPopupMenu) {
             self.popupMenu = popupMenu
@@ -714,6 +713,11 @@ extension QBPopupMenu {
             }
             
             return view
+        }
+        
+        func dismiss() {
+            removeFromSuperview()
+            popupMenu = nil
         }
     }
 }
