@@ -6,9 +6,9 @@ Its appearance is similar to `UIMenuController` of iOS 7, and it has several new
 
 
 ## Screenshot
-![screenshot01.png](screenshot01.png)
+![screenshot1.png](screenshot1.png)
 
-![screenshot02.png](screenshot02.png)
+![screenshot2.png](screenshot2.png)
 
 
 ## Installation
