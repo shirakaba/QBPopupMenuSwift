@@ -3,6 +3,9 @@
 
 import UIKit
 
+/**
+ Extends QBPopupMenu and modifies menu appearance to be 3D plastic like
+ */
 class QBPlasticPopupMenu : QBPopupMenu
 {
     

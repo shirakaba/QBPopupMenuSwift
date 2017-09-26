@@ -33,13 +33,13 @@ class ViewController: UIViewController {
     @IBAction func displayMenu(_ sender: Any) {
         let popupMenu = QBPopupMenu(items: menuItems)
         let button = sender as! UIButton
-        popupMenu.showIn(view: view, targetRect: button.frame, animated: true)
+        popupMenu.showIn(parentView: view, targetRect: button.frame, animated: true)
     }
     
     @IBAction func displayPlasticMenu(_ sender: Any) {
         let popupMenu = QBPlasticPopupMenu(config: QBPopupMenu.Config(height: 40), items: menuItems)
         let button = sender as! UIButton
-        popupMenu.showIn(view: view, targetRect: button.frame, animated: true)
+        popupMenu.showIn(parentView: view, targetRect: button.frame, animated: true)
     }
     
     func action() {

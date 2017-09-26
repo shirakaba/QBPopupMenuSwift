@@ -4,37 +4,56 @@
 import Foundation
 import UIKit
 
-protocol QBPopupMenuDelegate: class {
+public protocol QBPopupMenuDelegate: class {
     func popupMenuWillAppear    (menu: QBPopupMenu)
     func popupMenuDidAppear     (menu: QBPopupMenu)
     func popupMenuWillDisappear (menu: QBPopupMenu)
     func popupMenuDidDisappear  (menu: QBPopupMenu)
 }
 
-class QBPopupMenu: UIView {
+public class QBPopupMenu: UIView {
 
+    //GUI config
     let config:                         Config
-    private var itemViews:              [ItemView]
-    private var groupedItemViews:       [[ItemView]]?
-    private var visibleItemViews =      [ItemView]()
     
-    private var targetRect:             CGRect?
-    private weak var view:              UIView?
-    private(set) var arrowDirection:    ArrowDirection = .up
+    //menu items
+    private var items:                  [ItemView]
+    
+    //menu items grupped to fit the screen
+    private var groupedItems:           [[ItemView]]?
+
+    //visible page from grouppedItems
     private var page: Int               = 0
-    private var arrowPoint =            CGPoint.zero
+
+    //visible menu items including pagenators
+    private var visibleItems            = [ItemView]()
+
+    //overlay parent for the popup menu
     private var overlay:                Overlay?
 
-    weak var  delegate:                 QBPopupMenuDelegate?
+    //menu arrow target rect
+    private var targetRect:             CGRect?
+    
+    //parent view
+    private weak var parentView:        UIView?
+    
+    //direction of menu arrow
+    private(set) var arrowDirection:    ArrowDirection = .up
+    
+    //point of the popup arrow
+    private var arrowPoint =            CGPoint.zero
 
-    init(config: Config = Config.standard, items: [QBPopupMenu.Item]) {
+    //menu delegate
+    private weak var  delegate:         QBPopupMenuDelegate?
+
+    public init(config: Config = Config.standard, items: [QBPopupMenu.Item]) {
         self.config = config
-        itemViews = [ItemView]()
+        self.items = [ItemView]()
         
         super.init(frame: .zero)
 
         for item in items {
-            itemViews.append(ItemView(popupMenu: self, item: item))
+            self.items.append(ItemView(popupMenu: self, item: item))
         }
 
         isOpaque = false
@@ -42,11 +61,11 @@ class QBPopupMenu: UIView {
         clipsToBounds = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) can not be used.")
     }
 
-    func showIn(view: UIView, targetRect: CGRect, animated: Bool) {
+    public func showIn(parentView: UIView, targetRect: CGRect, animated: Bool) {
         
         var topMenuInset = config.popupMenuInsets.top
 
@@ -55,16 +74,16 @@ class QBPopupMenu: UIView {
             topMenuInset = 2 * config.popupMenuInsets.top
         }
 
-        self.view = view
+        self.parentView = parentView
         self.targetRect = targetRect
 
         if (targetRect.origin.y - (config.height + config.arrowSize)) >= topMenuInset {
             arrowDirection = .down
-        } else if (targetRect.origin.y + targetRect.size.height + (config.height + config.arrowSize)) < (view.bounds.size.height - config.popupMenuInsets.bottom) {
+        } else if (targetRect.origin.y + targetRect.size.height + (config.height + config.arrowSize)) < (parentView.bounds.size.height - config.popupMenuInsets.bottom) {
             arrowDirection = .up
         } else {
             let left = targetRect.origin.x - config.popupMenuInsets.left
-            let right = view.bounds.size.width - (targetRect.origin.x + targetRect.size.width + config.popupMenuInsets.right)
+            let right = parentView.bounds.size.width - (targetRect.origin.x + targetRect.size.width + config.popupMenuInsets.right)
 
             arrowDirection = (left > right) ? .left : .right
         }
@@ -74,7 +93,7 @@ class QBPopupMenu: UIView {
 
         switch arrowDirection {
             case .down, .up:
-                maximumWidth = view.bounds.size.width - (config.popupMenuInsets.left + config.popupMenuInsets.right)
+                maximumWidth = parentView.bounds.size.width - (config.popupMenuInsets.left + config.popupMenuInsets.right)
                 if maximumWidth < minimumWidth {
                     maximumWidth = minimumWidth
                 }
@@ -83,7 +102,7 @@ class QBPopupMenu: UIView {
                 maximumWidth = targetRect.origin.x - config.popupMenuInsets.left
 
             case .right:
-                maximumWidth = view.bounds.size.width - (targetRect.origin.x + targetRect.size.width + config.popupMenuInsets.right)
+                maximumWidth = parentView.bounds.size.width - (targetRect.origin.x + targetRect.size.width + config.popupMenuInsets.right)
         }
 
         groupItemViewsWithMaximumWidth(maximumWidth)
@@ -94,14 +113,14 @@ class QBPopupMenu: UIView {
         overlay?.removeFromSuperview()
 
         // Create overlay view
-        overlay = Overlay(frame: view.bounds, popupMenu: self)
+        overlay = Overlay(frame: parentView.bounds, popupMenu: self)
 
         // Delegate
         delegate?.popupMenuWillAppear(menu: self)
 
         // Show
         if let overlay = overlay {
-            view.addSubview(overlay)
+            parentView.addSubview(overlay)
         }
 
         if animated {
@@ -120,15 +139,15 @@ class QBPopupMenu: UIView {
         }
     }
     
-    func update(targetRect: CGRect) {
+    private func update(targetRect: CGRect) {
         self.targetRect = targetRect
     
         updatePopupMenuFrameAndArrowPosition()
         updatePopupMenuImage()
     }
     
-    func groupItemViewsWithMaximumWidth(_ maximumWidth: CGFloat) {
-        var groupedItemViews = [[ItemView]]()
+    private func groupItemViewsWithMaximumWidth(_ maximumWidth: CGFloat) {
+        var groupedItems = [[ItemView]]()
 
         // Create new array
         var newGroup = [ItemView]()
@@ -138,17 +157,17 @@ class QBPopupMenu: UIView {
             width += config.arrowSize
         }
 
-        for itemView in itemViews {
+        for item in items {
             // Clear state
-            resetItemViewState(itemView)
+            resetItemViewState(item)
 
-            let itemViewSize = itemView.sizeThatFits(.zero)
-            let isLastItem = (itemView === itemViews.last)
+            let itemSize = item.sizeThatFits(.zero)
+            let isLastItem = (item === items.last)
 
-            let sizeToAdd = isLastItem ? itemViewSize.width : (itemViewSize.width + config.pagenatorWidth)
+            let sizeToAdd = isLastItem ? itemSize.width : (itemSize.width + config.pagenatorWidth)
 
             if newGroup.count > 0 && width + sizeToAdd > maximumWidth {
-                groupedItemViews.append(newGroup)
+                groupedItems.append(newGroup)
 
                 // Create new array
                 newGroup = [ItemView]()
@@ -158,15 +177,15 @@ class QBPopupMenu: UIView {
                 }
             }
 
-            newGroup.append(itemView)
-            width += itemViewSize.width
+            newGroup.append(item)
+            width += itemSize.width
         }
 
         if newGroup.count > 0 {
-            groupedItemViews.append(newGroup)
+            groupedItems.append(newGroup)
         }
 
-        self.groupedItemViews = groupedItemViews
+        self.groupedItems = groupedItems
     }
     
     private func resetItemViewState(_ itemView: ItemView)
@@ -178,24 +197,24 @@ class QBPopupMenu: UIView {
         itemView.highlightedImage = nil
     }
     
-    func showPage(_ page: Int) {
+    private func showPage(_ page: Int) {
         self.page = page
         
-        updateVisibleItemViews()
-        layoutVisibleItemViews()
+        updateVisibleItems()
+        layoutVisibleItems()
         updatePopupMenuFrameAndArrowPosition()
         updatePopupMenuImage()
     }
     
-    func showPreviousPage() {
+    private func showPreviousPage() {
         showPage(page - 1)
     }
     
-    func showNextPage() {
+    private func showNextPage() {
         showPage(page + 1)
     }
     
-    func dismiss(animated: Bool) {
+    public func dismiss(animated: Bool) {
         delegate?.popupMenuWillDisappear(menu: self)
 
         if animated {
@@ -212,17 +231,17 @@ class QBPopupMenu: UIView {
         }
     }
     
-    func updateVisibleItemViews() {
+    private func updateVisibleItems() {
         // Remove all visible item views
-        while visibleItemViews.count > 0 {
-            visibleItemViews.removeFirst().removeFromSuperview()
+        while visibleItems.count > 0 {
+            visibleItems.removeFirst().removeFromSuperview()
         }
 
         // Add item views
-        visibleItemViews = [ItemView]()
-        let numberOfPages = groupedItemViews?.count ?? 0
+        visibleItems = [ItemView]()
+        let numberOfPages = groupedItems?.count ?? 0
 
-        assert(numberOfPages >= page)
+        precondition(numberOfPages >= page)
 
         if numberOfPages > 1 && page != 0 {
             let leftPagenatorView = PagenatorView(popupMenu: self, direction: .left) { [weak self] in
@@ -230,12 +249,12 @@ class QBPopupMenu: UIView {
             }
 
             addSubview(leftPagenatorView)
-            visibleItemViews.append(leftPagenatorView)
+            visibleItems.append(leftPagenatorView)
         }
 
-        for itemView in groupedItemViews?[page] ?? [] {
+        for itemView in groupedItems?[page] ?? [] {
             addSubview(itemView)
-            visibleItemViews.append(itemView)
+            visibleItems.append(itemView)
         }
 
         if page < numberOfPages - 1 {
@@ -244,11 +263,11 @@ class QBPopupMenu: UIView {
             }
 
             addSubview(rightPagenatorView)
-            visibleItemViews.append(rightPagenatorView)
+            visibleItems.append(rightPagenatorView)
         }
     }
     
-    func layoutVisibleItemViews() {
+    private func layoutVisibleItems() {
         var height = config.height
 
         if arrowDirection == .down || arrowDirection == .up {
@@ -256,8 +275,8 @@ class QBPopupMenu: UIView {
         }
 
         var offset: CGFloat = 0
-        for i in 0 ..< visibleItemViews.count {
-            let itemView = visibleItemViews[i]
+        for i in 0 ..< visibleItems.count {
+            let itemView = visibleItems[i]
 
             // Clear state
             resetItemViewState(itemView)
@@ -265,7 +284,7 @@ class QBPopupMenu: UIView {
             // Set item view insets
             if i == 0 && arrowDirection == .left {
                 itemView.button.contentEdgeInsets = UIEdgeInsetsMake(0, config.arrowSize, 0, 0)
-            } else if i == visibleItemViews.count - 1 && arrowDirection == .right {
+            } else if i == visibleItems.count - 1 && arrowDirection == .right {
                 itemView.button.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, config.arrowSize)
             } else if arrowDirection == .down {
                 itemView.button.contentEdgeInsets = UIEdgeInsetsMake(0, 0, config.arrowSize, 0)
@@ -277,7 +296,7 @@ class QBPopupMenu: UIView {
             let size = itemView.sizeThatFits(.zero)
             var width = size.width
 
-            if (i == 0 && arrowDirection == .left) || (i == visibleItemViews.count - 1 && arrowDirection == .right) {
+            if (i == 0 && arrowDirection == .left) || (i == visibleItems.count - 1 && arrowDirection == .right) {
                 width += config.arrowSize
             }
 
@@ -287,11 +306,11 @@ class QBPopupMenu: UIView {
         }
     }
     
-    func updatePopupMenuFrameAndArrowPosition() {
+    private func updatePopupMenuFrameAndArrowPosition() {
         guard
-            let itemView = visibleItemViews.last,
+            let itemView = visibleItems.last,
             let targetRect = targetRect,
-            let view = view
+            let parentView = parentView
         else {
             return
         }
@@ -305,8 +324,8 @@ class QBPopupMenu: UIView {
             case .down:
                 popupMenuFrame = CGRect(x: targetRect.origin.x + (targetRect.size.width - width) / 2.0, y: targetRect.origin.y - (height + config.margin), width: width, height: height)
 
-                if popupMenuFrame.origin.x + popupMenuFrame.size.width > view.frame.size.width - config.popupMenuInsets.right {
-                    popupMenuFrame.origin.x = view.frame.size.width - config.popupMenuInsets.right - popupMenuFrame.size.width
+                if popupMenuFrame.origin.x + popupMenuFrame.size.width > parentView.frame.size.width - config.popupMenuInsets.right {
+                    popupMenuFrame.origin.x = parentView.frame.size.width - config.popupMenuInsets.right - popupMenuFrame.size.width
                 }
                 if popupMenuFrame.origin.x < config.popupMenuInsets.left {
                     popupMenuFrame.origin.x = config.popupMenuInsets.left
@@ -318,8 +337,8 @@ class QBPopupMenu: UIView {
             case .up:
                 popupMenuFrame = CGRect(x: targetRect.origin.x + (targetRect.size.width - width) / 2.0, y: targetRect.origin.y + targetRect.size.height + config.margin, width: width, height: height)
 
-                if popupMenuFrame.origin.x + popupMenuFrame.size.width > view.frame.size.width - config.popupMenuInsets.right {
-                    popupMenuFrame.origin.x = view.frame.size.width - config.popupMenuInsets.right - popupMenuFrame.size.width
+                if popupMenuFrame.origin.x + popupMenuFrame.size.width > parentView.frame.size.width - config.popupMenuInsets.right {
+                    popupMenuFrame.origin.x = parentView.frame.size.width - config.popupMenuInsets.right - popupMenuFrame.size.width
                 }
                 if popupMenuFrame.origin.x < config.popupMenuInsets.left {
                     popupMenuFrame.origin.x = config.popupMenuInsets.left
@@ -331,8 +350,8 @@ class QBPopupMenu: UIView {
             case .left:
                 popupMenuFrame = CGRect(x: targetRect.origin.x + targetRect.size.width + config.margin, y: targetRect.origin.y + (targetRect.size.height - height) / 2.0, width: width, height: height)
 
-                if popupMenuFrame.origin.y + popupMenuFrame.size.height > view.frame.size.height - config.popupMenuInsets.bottom {
-                    popupMenuFrame.origin.y = view.frame.size.height - config.popupMenuInsets.bottom - popupMenuFrame.size.height
+                if popupMenuFrame.origin.y + popupMenuFrame.size.height > parentView.frame.size.height - config.popupMenuInsets.bottom {
+                    popupMenuFrame.origin.y = parentView.frame.size.height - config.popupMenuInsets.bottom - popupMenuFrame.size.height
                 }
                 if popupMenuFrame.origin.y < config.popupMenuInsets.top {
                     popupMenuFrame.origin.y = config.popupMenuInsets.top
@@ -344,8 +363,8 @@ class QBPopupMenu: UIView {
             case .right:
                 popupMenuFrame = CGRect(x: targetRect.origin.x - (width + config.margin), y: targetRect.origin.y + (targetRect.size.height - height) / 2.0, width: width, height: height)
 
-                if popupMenuFrame.origin.y + popupMenuFrame.size.height > view.frame.size.height - config.popupMenuInsets.bottom {
-                    popupMenuFrame.origin.y = view.frame.size.height - config.popupMenuInsets.bottom - popupMenuFrame.size.height
+                if popupMenuFrame.origin.y + popupMenuFrame.size.height > parentView.frame.size.height - config.popupMenuInsets.bottom {
+                    popupMenuFrame.origin.y = parentView.frame.size.height - config.popupMenuInsets.bottom - popupMenuFrame.size.height
                 }
                 if popupMenuFrame.origin.y < config.popupMenuInsets.top {
                     popupMenuFrame.origin.y = config.popupMenuInsets.top
@@ -355,14 +374,10 @@ class QBPopupMenu: UIView {
                 arrowPoint = CGPoint(x: popupMenuFrame.size.width, y: max(config.cornerRadius, min(popupMenuFrame.size.height - config.cornerRadius, centerOfTargetRect - popupMenuFrame.origin.y)))
         }
 
-        // Round coordinates
-        popupMenuFrame = CGRect(x: round(popupMenuFrame.origin.x), y: round(popupMenuFrame.origin.y), width: round(popupMenuFrame.size.width), height: round(popupMenuFrame.size.height))
-        arrowPoint =     CGPoint(x: round(arrowPoint.x), y: round(arrowPoint.y))
-
         frame = popupMenuFrame
     }
     
-    func updatePopupMenuImage() {
+    private func updatePopupMenuImage() {
         guard
             let menuImage = popupMenuImage(highlighted: false),
             let menuHighlightedImage = popupMenuImage(highlighted: true)
@@ -370,8 +385,8 @@ class QBPopupMenu: UIView {
                 return
         }
 
-        for i in 0 ..< visibleItemViews.count {
-            let itemView = visibleItemViews[i]
+        for i in 0 ..< visibleItems.count {
+            let itemView = visibleItems[i]
 
             itemView.image = cropImageFrom(image: menuImage, inRect: itemView.frame)
             itemView.highlightedImage = cropImageFrom(image: menuHighlightedImage, inRect: itemView.frame)
@@ -389,19 +404,19 @@ class QBPopupMenu: UIView {
         return UIImage(cgImage: imageRef, scale:scale, orientation: .up)
     }
     
-    func popupMenuImage(highlighted: Bool) -> UIImage? {
+    private func popupMenuImage(highlighted: Bool) -> UIImage? {
 
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
 
         // Draw body
         let y = (arrowDirection == .up) ? config.arrowSize : 0
 
-        for i in 0 ..< visibleItemViews.count {
-            let itemView = visibleItemViews[i]
+        for i in 0 ..< visibleItems.count {
+            let itemView = visibleItems[i]
             let frame = itemView.frame
 
             if i == 0 {
-                if visibleItemViews.count == 1 {
+                if visibleItems.count == 1 {
                     var headRect = CGRect.zero
                     var bodyRect = CGRect.zero
                     var tailRect = CGRect.zero
@@ -438,7 +453,7 @@ class QBPopupMenu: UIView {
                     drawHeadIn(rect: headRect, highlighted: highlighted)
                     drawBodyIn(rect: bodyRect, firstItem: true, lastItem: false, highlighted: highlighted)
                 }
-            } else if i == visibleItemViews.count - 1 {
+            } else if i == visibleItems.count - 1 {
                 var bodyRect = CGRect.zero
                 var tailRect = CGRect.zero
 
@@ -460,8 +475,33 @@ class QBPopupMenu: UIView {
         }
 
         // Draw arrow
-        drawArrowAt(point: arrowPoint, highlighted: highlighted)
+        var arrowRect = computeArrowRect(point: arrowPoint)
 
+        //shift arrow rect if it is intersected by separator
+        if arrowDirection == .up || arrowDirection == .down {
+            // x coordinates of all separators
+            for itemView in visibleItems {
+                let separatorX = itemView.frame.origin.x + itemView.frame.size.width - 1
+                
+                //if separator intersects with arrow
+                if separatorX >= arrowRect.origin.x && separatorX <= arrowRect.origin.x + arrowRect.width {
+                    
+                    let centerX = (parentView?.bounds.width ?? 0) / 2
+                    
+                    //shift arrow rect towards the screen center
+                    if parentView == nil || centerX > separatorX {
+                        arrowRect.origin.x = separatorX + 1
+                    } else {
+                        arrowRect.origin.x = separatorX - arrowRect.width - 1
+                    }
+                    
+                    break
+                }
+            }
+        }
+
+        drawArrowIn(rect: arrowRect, highlighted: highlighted)
+        
         // Create image from buffer
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -469,15 +509,27 @@ class QBPopupMenu: UIView {
         return image
     }
     
-   func drawArrowIn(rect: CGRect, highlighted:Bool)
-    {
-        // Separator
-        if arrowDirection == .down || arrowDirection == .up {
-            for itemView in visibleItemViews {
-                drawSeparatorIn(rect: CGRect(x: itemView.frame.origin.x + itemView.frame.size.width - 1, y: rect.origin.y, width: 1, height: rect.size.height))
-            }
+    func computeArrowRect(point: CGPoint) -> CGRect {
+        var arrowRect = CGRect.zero
+        
+        switch arrowDirection {
+        case .down:
+            arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: point.y - config.arrowSize, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
+            arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
+        case .up:
+            arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: 0, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
+            arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
+        case .left:
+            arrowRect = CGRect(x: 0, y: point.y - config.arrowSize + 1.0, width: config.arrowSize, height: config.arrowSize * 2.0 - 1.0)
+        case .right:
+            arrowRect = CGRect(x: point.x - config.arrowSize, y: point.y - config.arrowSize + 1.0, width: config.arrowSize, height: config.arrowSize * 2.0 - 1.0)
         }
         
+        return arrowRect
+    }
+    
+   func drawArrowIn(rect: CGRect, highlighted:Bool)
+    {
         QBPopupMenu.fillPath(path: arrowPathIn(rect: rect), color: (highlighted ? config.highlightedColor : config.color))
     }
     
@@ -504,24 +556,6 @@ class QBPopupMenu: UIView {
         }
     }
     
-    func drawArrowAt(point: CGPoint, highlighted: Bool) {
-        var arrowRect = CGRect.zero
-
-        switch arrowDirection {
-            case .down:
-                arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: point.y - config.arrowSize, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
-                arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
-            case .up:
-                arrowRect = CGRect(x: point.x - config.arrowSize + 1.0, y: 0, width: config.arrowSize * 2.0 - 1.0, height: config.arrowSize)
-                arrowRect.origin.x = min(max(arrowRect.origin.x, config.cornerRadius), frame.size.width - config.cornerRadius - arrowRect.size.width)
-            case .left:
-                arrowRect = CGRect(x: 0, y: point.y - config.arrowSize + 1.0, width: config.arrowSize, height: config.arrowSize * 2.0 - 1.0)
-            case .right:
-                arrowRect = CGRect(x: point.x - config.arrowSize, y: point.y - config.arrowSize + 1.0, width: config.arrowSize, height: config.arrowSize * 2.0 - 1.0)
-        }
-
-        drawArrowIn(rect: arrowRect, highlighted: highlighted)
-    }
 }
 
 extension QBPopupMenu {
@@ -589,7 +623,7 @@ extension QBPopupMenu {
 
 extension QBPopupMenu {
     
-    struct Config {
+    public struct Config {
         let popupMenuInsets: UIEdgeInsets
         let margin: CGFloat
         let cornerRadius: CGFloat
@@ -622,7 +656,7 @@ extension QBPopupMenu {
             self.pagenatorWidth = pagenatorWidth
         }
         
-        static var standard: Config {
+        public static var standard: Config {
             return Config(
                 popupMenuInsets:    UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
                 margin:             2,
@@ -632,14 +666,14 @@ extension QBPopupMenu {
                 arrowSize:          9,
                 animationDuration:  0.2,
                 height:             36,
-                pagenatorWidth:     10 + 10 * 2
+                pagenatorWidth:     20 + 10 * 2
             )
         }
     }
 }
 
 extension QBPopupMenu {
-    struct Item {
+    public struct Item {
         let title: String?
         let image: UIImage?
         let action: (()->())?
@@ -837,8 +871,7 @@ extension QBPopupMenu {
                     ])
                 
             default:
-                assertionFailure( "Pagenator arrow direction can only be left or right.")
-                return CGMutablePath()
+                preconditionFailure("Pagenator arrow direction can only be left or right.")
             }
         }
     }

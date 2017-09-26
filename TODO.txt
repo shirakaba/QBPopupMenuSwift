@@ -1,8 +1,4 @@
-check memory leaks
 readme - update, check github language tags
-public/private access
 document
-uiview - main thread check
-weak vs strong
 separator width and color, text color
 lines after dismiss?
