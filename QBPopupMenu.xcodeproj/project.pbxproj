@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F90C874E1F7AF64000E7223A /* screenshot2.png in Resources */ = {isa = PBXBuildFile; fileRef = F90C874C1F7AF64000E7223A /* screenshot2.png */; };
+		F90C874F1F7AF64000E7223A /* screenshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = F90C874D1F7AF64000E7223A /* screenshot1.png */; };
 		F98EC9091F7851C300AED6BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EC9081F7851C300AED6BE /* AppDelegate.swift */; };
 		F98EC90B1F7851C300AED6BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EC90A1F7851C300AED6BE /* ViewController.swift */; };
 		F98EC90E1F7851C300AED6BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98EC90C1F7851C300AED6BE /* Main.storyboard */; };
@@ -15,12 +17,12 @@
 		F98EC91C1F78529800AED6BE /* QBPlasticPopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EC91A1F78529800AED6BE /* QBPlasticPopupMenu.swift */; };
 		F98EC91D1F78529800AED6BE /* QBPopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EC91B1F78529800AED6BE /* QBPopupMenu.swift */; };
 		F98EC9271F785DB000AED6BE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F98EC9251F785DB000AED6BE /* README.md */; };
-		F98EC92C1F785DCA00AED6BE /* screenshot02.png in Resources */ = {isa = PBXBuildFile; fileRef = F98EC9291F785DCA00AED6BE /* screenshot02.png */; };
 		F98EC92D1F785DCA00AED6BE /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = F98EC92A1F785DCA00AED6BE /* LICENSE.txt */; };
-		F98EC92E1F785DCA00AED6BE /* screenshot01.png in Resources */ = {isa = PBXBuildFile; fileRef = F98EC92B1F785DCA00AED6BE /* screenshot01.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F90C874C1F7AF64000E7223A /* screenshot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot2.png; sourceTree = SOURCE_ROOT; };
+		F90C874D1F7AF64000E7223A /* screenshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot1.png; sourceTree = SOURCE_ROOT; };
 		F98EC9051F7851C300AED6BE /* QBPopupMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QBPopupMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98EC9081F7851C300AED6BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98EC90A1F7851C300AED6BE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -31,9 +33,7 @@
 		F98EC91A1F78529800AED6BE /* QBPlasticPopupMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBPlasticPopupMenu.swift; sourceTree = "<group>"; };
 		F98EC91B1F78529800AED6BE /* QBPopupMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBPopupMenu.swift; sourceTree = "<group>"; };
 		F98EC9251F785DB000AED6BE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		F98EC9291F785DCA00AED6BE /* screenshot02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot02.png; sourceTree = SOURCE_ROOT; };
 		F98EC92A1F785DCA00AED6BE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
-		F98EC92B1F785DCA00AED6BE /* screenshot01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot01.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,9 +90,9 @@
 		F98EC9241F785D7A00AED6BE /* Docs */ = {
 			isa = PBXGroup;
 			children = (
+				F90C874D1F7AF64000E7223A /* screenshot1.png */,
+				F90C874C1F7AF64000E7223A /* screenshot2.png */,
 				F98EC92A1F785DCA00AED6BE /* LICENSE.txt */,
-				F98EC92B1F785DCA00AED6BE /* screenshot01.png */,
-				F98EC9291F785DCA00AED6BE /* screenshot02.png */,
 				F98EC9251F785DB000AED6BE /* README.md */,
 			);
 			name = Docs;
@@ -157,13 +157,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90C874E1F7AF64000E7223A /* screenshot2.png in Resources */,
 				F98EC9131F7851C300AED6BE /* LaunchScreen.storyboard in Resources */,
-				F98EC92E1F785DCA00AED6BE /* screenshot01.png in Resources */,
 				F98EC9101F7851C300AED6BE /* Assets.xcassets in Resources */,
-				F98EC92C1F785DCA00AED6BE /* screenshot02.png in Resources */,
 				F98EC9271F785DB000AED6BE /* README.md in Resources */,
 				F98EC90E1F7851C300AED6BE /* Main.storyboard in Resources */,
 				F98EC92D1F785DCA00AED6BE /* LICENSE.txt in Resources */,
+				F90C874F1F7AF64000E7223A /* screenshot1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

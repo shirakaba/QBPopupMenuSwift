@@ -1,8 +1,14 @@
-# QBPopupMenu
-Customizable popup menu for iOS.
+# QBPopupMenuSwift
+Customizable popup menu for iOS. Forked and rewritten to Swift from <a href="https://github.com/questbeat/QBPopupMenu">questbeat/QBPopupMenu</a>
 
-**QBPopupMenu version 2.0 is now available.**  
+**QBPopupMenuSwift version 1.0 is now available.**  
 Its appearance is similar to `UIMenuController` of iOS 7, and it has several new features.
+
+* Code was completely rewritten and modified to match Swift 4.0 language features, some improvements and cleanup was also performed  
+* Project organization was flattened
+* Configuration of popup menu separated to own object
+
+**Bug reports, patches, suggestions or any other feedback is highly welcome!**
 
 
 ## Screenshot
@@ -10,20 +16,15 @@ Its appearance is similar to `UIMenuController` of iOS 7, and it has several new
 <img src="screenshot2.png" width=350>
 
 
-## Installation
-QBPopupMenu is available in CocoaPods.
+## Manual installation
 
-    pod 'QBPopupMenu'
-
-If you want to install manually, download this repository and copy files in QBPopupMenu directory to your project.
-
+Copu QBPopupMenu.swift optionally with QBPlasticPopupMenu.swift to your project.
 
 ## Feature
 ### Customizable Appearance
 QBPopupMenu is highly customizable, so you can create your own popup menu.
 
-The simple way to customize is set `color` and `highlightcolor` property of `QBPopupMenu`.  
-If you want to customize deeply, you should create a subclass of `QBPopupMenu` and override some drawing methods.
+The simple way to customize is set `color` and `highlightcolor` property of `QBPopupMenu` config object passed to initializer. If you want to customize deeply, you should create a subclass of `QBPopupMenu` and override some drawing methods.
 
 `QBPlasticPopupMenu` class in this repository is a good example of subclassing.
 
@@ -35,13 +36,47 @@ If you add many items to `QBPopupMenu`, it create pages and pagenator automatica
 
 
 ## Example
-    QBPopupMenuItem *item = [QBPopupMenuItem itemWithTitle:@"Text" target:self action:@selector(action:)];
-    QBPopupMenuItem *item2 = [QBPopupMenuItem itemWithImage:[UIImage imageNamed:@"image"] target:self action:@selector(action:)];
-
-    QBPopupMenu *popupMenu = [[QBPopupMenu alloc] initWithItems:@[item, item2]];
-
-    [popupMenu showInView:self.view targetRect:... animated:YES];
+	import UIKit
+	
+	class ViewController: UIViewController {
+	
+	    var menuItems: [QBPopupMenu.Item] {
+	        return [
+	            QBPopupMenu.Item(title: "Hello",                                    action: { self.action() }),
+	            QBPopupMenu.Item(title: "Cut",                                      action: { self.action() }),
+	            QBPopupMenu.Item(title: "Copy",                                     action: { self.action() }),
+	            QBPopupMenu.Item(title: "Delete",                                   action: { self.action() }),
+	            QBPopupMenu.Item(title: "Share",                                    action: { self.action() }),
+	            QBPopupMenu.Item(image: UIImage(named: "clip"),                     action: { self.action() }),
+	            QBPopupMenu.Item(title: "Delete", image: UIImage(named: "trash"),   action: { self.action() }),
+	        ]
+	    }
+	    
+	    override func viewDidLoad() {
+	        super.viewDidLoad()
+	    }
+	
+	    override func didReceiveMemoryWarning() {
+	        super.didReceiveMemoryWarning()
+	    }
+	
+	    @IBAction func displayMenu(_ sender: Any) {
+	        let button = sender as! UIButton
+	        let popupMenu = QBPopupMenu(items: menuItems)
+	        popupMenu.showIn(parentView: view, targetRect: button.frame, animated: true)
+	    }
+	    
+	    @IBAction func displayPlasticMenu(_ sender: Any) {
+	        let button = sender as! UIButton
+	        let popupMenu = QBPlasticPopupMenu(config: QBPopupMenu.Config(height: 40), items: menuItems)
+	        popupMenu.showIn(parentView: view, targetRect: button.frame, animated: true)
+	    }
+	    
+	    func action() {
+	        print("QBPopupMenuAction!")
+	    }
+	}
 
 
 ## License
-*QBPopupMenu* is released under the **MIT License**, see *LICENSE.txt*.
+*QBPopupMenu* and *QBPopupMenuSwift* is released under the **MIT License**, see *LICENSE.txt*.
