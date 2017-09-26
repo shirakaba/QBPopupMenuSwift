@@ -12,6 +12,13 @@ public protocol QBPopupMenuDelegate: class {
 }
 
 public class QBPopupMenu {
+    
+    enum ArrowDirection {
+        case up
+        case down
+        case left
+        case right
+    }
 
     //GUI config
     let config:                         Config
@@ -946,12 +953,3 @@ extension QBPopupMenu {
     }
 }
 
-extension QBPopupMenu {
-    
-    enum ArrowDirection {
-        case up
-        case down
-        case left
-        case right
-    }
-}

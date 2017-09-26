@@ -15,7 +15,6 @@
 		F98EC91C1F78529800AED6BE /* QBPlasticPopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EC91A1F78529800AED6BE /* QBPlasticPopupMenu.swift */; };
 		F98EC91D1F78529800AED6BE /* QBPopupMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EC91B1F78529800AED6BE /* QBPopupMenu.swift */; };
 		F98EC9271F785DB000AED6BE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F98EC9251F785DB000AED6BE /* README.md */; };
-		F98EC9281F785DB000AED6BE /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = F98EC9261F785DB000AED6BE /* TODO.txt */; };
 		F98EC92C1F785DCA00AED6BE /* screenshot02.png in Resources */ = {isa = PBXBuildFile; fileRef = F98EC9291F785DCA00AED6BE /* screenshot02.png */; };
 		F98EC92D1F785DCA00AED6BE /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = F98EC92A1F785DCA00AED6BE /* LICENSE.txt */; };
 		F98EC92E1F785DCA00AED6BE /* screenshot01.png in Resources */ = {isa = PBXBuildFile; fileRef = F98EC92B1F785DCA00AED6BE /* screenshot01.png */; };
@@ -32,7 +31,6 @@
 		F98EC91A1F78529800AED6BE /* QBPlasticPopupMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBPlasticPopupMenu.swift; sourceTree = "<group>"; };
 		F98EC91B1F78529800AED6BE /* QBPopupMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBPopupMenu.swift; sourceTree = "<group>"; };
 		F98EC9251F785DB000AED6BE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		F98EC9261F785DB000AED6BE /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = SOURCE_ROOT; };
 		F98EC9291F785DCA00AED6BE /* screenshot02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot02.png; sourceTree = SOURCE_ROOT; };
 		F98EC92A1F785DCA00AED6BE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		F98EC92B1F785DCA00AED6BE /* screenshot01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot01.png; sourceTree = SOURCE_ROOT; };
@@ -96,7 +94,6 @@
 				F98EC92B1F785DCA00AED6BE /* screenshot01.png */,
 				F98EC9291F785DCA00AED6BE /* screenshot02.png */,
 				F98EC9251F785DB000AED6BE /* README.md */,
-				F98EC9261F785DB000AED6BE /* TODO.txt */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -160,7 +157,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F98EC9281F785DB000AED6BE /* TODO.txt in Resources */,
 				F98EC9131F7851C300AED6BE /* LaunchScreen.storyboard in Resources */,
 				F98EC92E1F785DCA00AED6BE /* screenshot01.png in Resources */,
 				F98EC9101F7851C300AED6BE /* Assets.xcassets in Resources */,

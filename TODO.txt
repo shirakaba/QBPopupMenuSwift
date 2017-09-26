@@ -1,4 +1,0 @@
-readme - update, check github language tags
-document
-separator width and color, text color
-lines after dismiss?
