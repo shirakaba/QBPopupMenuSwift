@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     
     @IBAction func displayPlasticMenu(_ sender: Any) {
         let button = sender as! UIButton
-        let popupMenu = QBPlasticPopupMenu(config: QBPopupMenu.Config(height: 40), items: menuItems)
+        let popupMenu = QBPlasticPopupMenu(config: QBPopupMenu.Config(font: UIFont.systemFont(ofSize: 20), height: 40), items: menuItems)
         popupMenu.showIn(parentView: view, targetRect: button.frame, animated: true)
     }
     

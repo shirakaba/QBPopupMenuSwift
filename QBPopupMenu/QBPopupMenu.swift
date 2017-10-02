@@ -631,6 +631,7 @@ extension QBPopupMenu {
     
     public struct Config {
         let popupMenuInsets: UIEdgeInsets
+        let font: UIFont
         let margin: CGFloat
         let cornerRadius: CGFloat
         let color: UIColor
@@ -642,6 +643,7 @@ extension QBPopupMenu {
         
         init(
             popupMenuInsets: UIEdgeInsets   = Config.standard.popupMenuInsets,
+            font: UIFont                    = Config.standard.font,
             margin: CGFloat                 = Config.standard.margin,
             cornerRadius: CGFloat           = Config.standard.cornerRadius,
             color: UIColor                  = Config.standard.color,
@@ -650,8 +652,9 @@ extension QBPopupMenu {
             animationDuration: TimeInterval = Config.standard.animationDuration,
             height: CGFloat                 = Config.standard.height,
             pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth
-            ) {
+        ) {
             self.popupMenuInsets = popupMenuInsets
+            self.font = font
             self.margin = margin
             self.cornerRadius = cornerRadius
             self.color = color
@@ -665,6 +668,7 @@ extension QBPopupMenu {
         public static var standard: Config {
             return Config(
                 popupMenuInsets:    UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
+                font:               UIFont.systemFont(ofSize: 14),
                 margin:             2,
                 cornerRadius:       8,
                 color:              UIColor.black.withAlphaComponent(0.8),
@@ -754,7 +758,7 @@ extension QBPopupMenu {
             button.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             button.contentMode = .scaleAspectFit
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+            button.titleLabel?.font = popupMenu.config.font
             button.imageView?.contentMode = .scaleAspectFit
             button.setTitleColor(UIColor.white, for: .normal)
             button.setTitleColor(UIColor.white, for: .highlighted)
