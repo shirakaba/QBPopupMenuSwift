@@ -309,6 +309,15 @@ public class QBPopupMenu {
             itemView.frame = CGRect(x: offset, y: 0, width: width, height: height)
 
             offset += width
+            
+            if(!config.inlineImages){
+                if(UIView.userInterfaceLayoutDirection(for: itemView.semanticContentAttribute) == .leftToRight){
+                    itemView.button.imageEdgeInsets.left += (width - config.itemViewHorizontalPadding * 2) / 2
+                } else {
+                    itemView.button.imageEdgeInsets.right += (width - config.itemViewHorizontalPadding * 2) / 2
+                }
+                
+            }
         }
     }
     
@@ -641,6 +650,7 @@ extension QBPopupMenu {
         let height: CGFloat
         let pagenatorWidth: CGFloat
         let inlineImages: Bool
+        let itemViewHorizontalPadding: CGFloat
         
         init(
             popupMenuInsets: UIEdgeInsets   = Config.standard.popupMenuInsets,
@@ -653,7 +663,8 @@ extension QBPopupMenu {
             animationDuration: TimeInterval = Config.standard.animationDuration,
             height: CGFloat                 = Config.standard.height,
             pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth,
-            inlineImages: Bool              = Config.standard.inlineImages
+            inlineImages: Bool              = Config.standard.inlineImages,
+            itemViewHorizontalPadding: CGFloat = Config.standard.itemViewHorizontalPadding
         ) {
             self.popupMenuInsets = popupMenuInsets
             self.font = font
@@ -666,9 +677,11 @@ extension QBPopupMenu {
             self.height = height
             self.pagenatorWidth = pagenatorWidth
             self.inlineImages = inlineImages
+            self.itemViewHorizontalPadding = itemViewHorizontalPadding
         }
         
         public static var standard: Config {
+            let itemViewHorizontalPadding: CGFloat = 10
             return Config(
                 popupMenuInsets:    UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
                 font:               UIFont.systemFont(ofSize: 14),
@@ -679,8 +692,9 @@ extension QBPopupMenu {
                 arrowSize:          9,
                 animationDuration:  0.2,
                 height:             36 + 16,
-                pagenatorWidth:     20 + 10 * 2,
-                inlineImages:       false
+                pagenatorWidth:     20 + itemViewHorizontalPadding * 2,
+                inlineImages:       false,
+                itemViewHorizontalPadding: itemViewHorizontalPadding
             )
         }
     }
