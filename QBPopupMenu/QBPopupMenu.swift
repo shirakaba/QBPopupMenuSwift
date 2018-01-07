@@ -772,6 +772,7 @@ extension QBPopupMenu {
             button.contentMode = .scaleAspectFit
             button.titleLabel?.font = popupMenu.config.font
             button.imageView?.contentMode = .scaleAspectFit
+            // button.contentHorizontalAlignment = popupMenu.config.inlineImages ? .left : .center
             button.setTitleColor(UIColor.white, for: .normal)
             button.setTitleColor(UIColor.white, for: .highlighted)
             
@@ -783,14 +784,18 @@ extension QBPopupMenu {
             let halfHeight: CGFloat = popupMenu.config.height / 2
             
             if item?.title != nil && item?.image != nil {
+                let leftInset: CGFloat = 32 // where 32 is the width of the image at 2x size.
+                
                 if(UIView.userInterfaceLayoutDirection(for: self.semanticContentAttribute) == .leftToRight){
 //                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
 //                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
-                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: popupMenu.config.inlineImages ? 6 : 0, bottom: 0, right: 0)
-                    button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: popupMenu.config.inlineImages ? -3 : 0, bottom: 0, right: 0)
+                    
+                    
+                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: popupMenu.config.inlineImages ? 6 : 6 - leftInset/2, bottom: 0, right: 0)
+                    button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: popupMenu.config.inlineImages ? -3 : leftInset, bottom: 0, right: 0)
                 } else {
-                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? 6 : 0)
-                    button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? -3 : 0)
+                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? 6 : 6 - leftInset/2)
+                    button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? -3 : leftInset)
                 }
             } else {
                 button.titleEdgeInsets = .zero
