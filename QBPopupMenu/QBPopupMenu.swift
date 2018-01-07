@@ -715,16 +715,24 @@ extension QBPopupMenu {
             fatalError("init(coder:) can not be used.")
         }
         
-        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            let view = super.hitTest(point, with: event)
-            
+        override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            guard let touch: UITouch = touches.first, let view: UIView = touch.view else { return }
+
             if view === self {
                 popupMenu?.dismiss(animated: true)
-                return nil
             }
-            
-            return view
         }
+        
+//        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+//            let view = super.hitTest(point, with: event)
+//
+//            if view === self {
+//                popupMenu?.dismiss(animated: true)
+//                return nil
+//            }
+//
+//            return view
+//        }
         
         func dismiss() {
             removeFromSuperview()
