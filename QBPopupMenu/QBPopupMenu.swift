@@ -640,6 +640,7 @@ extension QBPopupMenu {
         let animationDuration: TimeInterval
         let height: CGFloat
         let pagenatorWidth: CGFloat
+        let inlineImages: Bool
         
         init(
             popupMenuInsets: UIEdgeInsets   = Config.standard.popupMenuInsets,
@@ -651,7 +652,8 @@ extension QBPopupMenu {
             arrowSize: CGFloat              = Config.standard.arrowSize,
             animationDuration: TimeInterval = Config.standard.animationDuration,
             height: CGFloat                 = Config.standard.height,
-            pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth
+            pagenatorWidth: CGFloat         = Config.standard.pagenatorWidth,
+            inlineImages: Bool              = Config.standard.inlineImages
         ) {
             self.popupMenuInsets = popupMenuInsets
             self.font = font
@@ -663,6 +665,7 @@ extension QBPopupMenu {
             self.animationDuration = animationDuration
             self.height = height
             self.pagenatorWidth = pagenatorWidth
+            self.inlineImages = inlineImages
         }
         
         public static var standard: Config {
@@ -675,8 +678,9 @@ extension QBPopupMenu {
                 highlightedColor:   UIColor.darkGray,
                 arrowSize:          9,
                 animationDuration:  0.2,
-                height:             36,
-                pagenatorWidth:     20 + 10 * 2
+                height:             36 + 16,
+                pagenatorWidth:     20 + 10 * 2,
+                inlineImages:       false
             )
         }
     }
@@ -775,13 +779,18 @@ extension QBPopupMenu {
             button.setImage(item?.image, for: .normal)
             button.setImage(item?.image, for: .highlighted)
             
+            let heightPadding: CGFloat = 6
+            let halfHeight: CGFloat = popupMenu.config.height / 2
+            
             if item?.title != nil && item?.image != nil {
                 if(UIView.userInterfaceLayoutDirection(for: self.semanticContentAttribute) == .leftToRight){
-                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
-                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+//                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+//                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: popupMenu.config.inlineImages ? 6 : 0, bottom: 0, right: 0)
+                    button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: popupMenu.config.inlineImages ? -3 : 0, bottom: 0, right: 0)
                 } else {
-                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6)
-                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -3)
+                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? 6 : 0)
+                    button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? -3 : 0)
                 }
             } else {
                 button.titleEdgeInsets = .zero
