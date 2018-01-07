@@ -784,14 +784,13 @@ extension QBPopupMenu {
             let halfHeight: CGFloat = popupMenu.config.height / 2
             
             if item?.title != nil && item?.image != nil {
-                let leftInset: CGFloat = 32 // where 32 is the width of the image at 2x size.
+                let imageWidth: CGFloat = item?.image?.size.width ?? 0 // where 32 is the width of the image at 2x size.
                 
                 if(UIView.userInterfaceLayoutDirection(for: self.semanticContentAttribute) == .leftToRight){
 //                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
 //                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
                     
-                    
-                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: popupMenu.config.inlineImages ? 6 : -leftInset, bottom: 0, right: 0)
+                    button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: popupMenu.config.inlineImages ? 6 : 0 - imageWidth, bottom: 0, right: 0)
                     button.imageEdgeInsets = UIEdgeInsets(top: -halfHeight + heightPadding, left: popupMenu.config.inlineImages ? -3 : 0, bottom: 0, right: 0)
                 } else {
                     button.titleEdgeInsets = UIEdgeInsets(top: halfHeight - heightPadding, left: 0, bottom: 0, right: popupMenu.config.inlineImages ? 6 : 0)
