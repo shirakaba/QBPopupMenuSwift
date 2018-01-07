@@ -776,8 +776,13 @@ extension QBPopupMenu {
             button.setImage(item?.image, for: .highlighted)
             
             if item?.title != nil && item?.image != nil {
-                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
-                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+                if(UIView.userInterfaceLayoutDirection(for: self.semanticContentAttribute) == .leftToRight){
+                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
+                } else {
+                    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6)
+                    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -3)
+                }
             } else {
                 button.titleEdgeInsets = .zero
                 button.imageEdgeInsets = .zero
