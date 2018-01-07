@@ -51,7 +51,7 @@ public class QBPopupMenu {
     private var arrowPoint =            CGPoint.zero
 
     //menu delegate
-    private weak var  delegate:         QBPopupMenuDelegate?
+    public weak var  delegate:         QBPopupMenuDelegate?
 
     //popup menu view
     private let view:                   UIView
